@@ -1,0 +1,9 @@
+{
+  "name": "vpnjc-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "vpnjc.blog static site",
+  "scripts": {
+    "build": "echo Static HTML site ready"
+  }
+}
