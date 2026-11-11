@@ -14,6 +14,8 @@ const EXCLUDED_TOP_LEVEL = new Set([
   'package.json',
   'package-lock.json',
   'build.mjs',
+  'scripts',
+  '.indexnow-state.json',
 ]);
 
 /**

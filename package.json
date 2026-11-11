@@ -4,6 +4,8 @@
   "private": true,
   "description": "vpnjc.blog static site",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "indexnow": "node scripts/submit-indexnow.mjs",
+    "indexnow:all": "node scripts/submit-indexnow.mjs --all"
   }
 }

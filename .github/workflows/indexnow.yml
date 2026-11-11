@@ -1,0 +1,38 @@
+name: IndexNow Submit
+
+on:
+  workflow_dispatch:
+    inputs:
+      submit_all:
+        description: 'Submit all URLs from sitemap.xml instead of git diff'
+        type: boolean
+        default: true
+  push:
+    branches:
+      - main
+    paths:
+      - '**.html'
+      - 'sitemap.xml'
+      - 'e0aadf4d5145454984d9d4478a87c0f4.txt'
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Wait for Cloudflare deploy and submit changed URLs to IndexNow
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.submit_all }}" = "true" ]; then
+            node scripts/submit-indexnow.mjs --all --wait
+          else
+            node scripts/submit-indexnow.mjs --git-diff --base="${{ github.event.before }}" --wait
+          fi
