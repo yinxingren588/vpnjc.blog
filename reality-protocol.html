@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLESS Reality协议详解：免域名TLS抗封锁原理｜vpnjc.blog</title>
+<meta name="description" content="科普近年抗阻断核心跃迁VLESS+Reality：零自签证书、消除主动探测指纹特征的实现路径，讲解为何各大新专线与自建节点将其视为核心利器。"/>
+<meta name="keywords" content="Reality协议,VLESS Reality,抗审查代理原理"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/reality-protocol"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="VLESS Reality协议详解：免域名TLS抗封锁原理｜vpnjc.blog"/>
+<meta property="og:description" content="科普近年抗阻断核心跃迁VLESS+Reality：零自签证书、消除主动探测指纹特征的实现路径，讲解为何各大新专线与自建节点将其视为核心利器。"/>
+<meta property="og:url" content="https://vpnjc.blog/reality-protocol"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=guide2026">
+</head>
+<body>
+<header class="nav">
+  <div class="container-xl">
+    <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="/" class="nm">首页</a>
+      <div class="nav-item">
+        <a href="/rankings" class="nm">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">榜单与评测</span>
+            <a href="/rankings" class="mega-link"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选VPN机场按评分排序</span></span></a>
+            <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+            <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">VPN机场评测</span><span class="ml-desc">10 篇逐家实测</span></span></a>
+            <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维加权怎么算</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">按需求筛选</span>
+            <a href="/cheap-airports" class="mega-link"><i class="ti ti-coin"></i><span class="ml-body"><span class="ml-title">便宜VPN机场</span><span class="ml-desc">起步价 15 元以内</span></span></a>
+            <a href="/traffic" class="mega-link"><i class="ti ti-database"></i><span class="ml-body"><span class="ml-title">按量VPN机场</span><span class="ml-desc">流量包不过期</span></span></a>
+            <a href="/tags" class="mega-link"><i class="ti ti-tags"></i><span class="ml-body"><span class="ml-title">标签导航</span><span class="ml-desc">28 个有效标签按协议/地区找</span></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/reviews" class="nm">评测<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">评测中心</span>
+            <a href="/reviews" class="mega-link"><i class="ti ti-clipboard-list"></i><span class="ml-body"><span class="ml-title">全部评测</span><span class="ml-desc">10 篇实测评测</span></span></a>
+            <a href="/methodology" class="mega-link"><i class="ti ti-chart-bar"></i><span class="ml-body"><span class="ml-title">评分标准</span><span class="ml-desc">稳定性/性能/价格/风险</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">精选专线直达</span>
+            <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+            <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+            <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+            <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+            <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+          </div>
+        </div>
+      </div>
+      <a href="/coupons" class="nm">优惠码</a>
+      <div class="nav-item">
+        <a href="/guide" class="nm active" aria-current="page">指南<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-mega">
+          <div class="mega-col">
+            <span class="mega-title">入门选购</span>
+            <a href="/guide"><i class="ti ti-book"></i>指南总览</a>
+            <a href="/airport-beginner-guide"><i class="ti ti-school"></i>新手入门</a>
+            <a href="/airport-comparison-guide"><i class="ti ti-scale"></i>横评选型</a>
+            <a href="/airport-plan-guide"><i class="ti ti-receipt"></i>套餐怎么选</a>
+            <a href="/multi-device-plan"><i class="ti ti-devices"></i>多设备方案</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">线路与协议</span>
+            <a href="/airport-line-types"><i class="ti ti-route"></i>线路类型详解</a>
+            <a href="/what-is-iplc"><i class="ti ti-server-2"></i>IPLC 专线</a>
+            <a href="/what-is-iepl"><i class="ti ti-server"></i>IEPL 专线</a>
+            <a href="/protocol-comparison"><i class="ti ti-git-compare"></i>代理协议对比</a>
+            <a href="/what-is-node"><i class="ti ti-help-circle"></i>节点是什么</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">使用与优化</span>
+            <a href="/node-region-guide"><i class="ti ti-world"></i>节点地区选择</a>
+            <a href="/node-multiplier-guide"><i class="ti ti-chart-bar"></i>节点倍率</a>
+            <a href="/node-utility-guide"><i class="ti ti-plug"></i>节点通用性</a>
+            <a href="/speed-metrics-guide"><i class="ti ti-gauge"></i>测速指标解读</a>
+            <a href="/dns-config-guide"><i class="ti ti-server"></i>DNS 设置</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">避坑与安全</span>
+            <a href="/airport-scam-prevention"><i class="ti ti-alert-triangle"></i>跑路识别</a>
+            <a href="/airport-support-guide"><i class="ti ti-headset"></i>售后与工单</a>
+            <a href="/subscription-security-guide"><i class="ti ti-shield-lock"></i>订阅安全</a>
+            <a href="/coupon-tips"><i class="ti ti-ticket"></i>优惠码避坑</a>
+            <a href="/airport-account-guide"><i class="ti ti-user-cog"></i>账号与订阅管理</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/tutorial" class="nm">教程<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-mega">
+          <div class="mega-col">
+            <span class="mega-title">入门基础</span>
+            <a href="/tutorial#start"><i class="ti ti-books"></i>新手推荐路径</a>
+            <a href="/tutorial-airport-vs-vpn"><i class="ti ti-arrows-exchange"></i>机场与 VPN 的区别</a>
+            <a href="/tutorial-airport-faq"><i class="ti ti-help-circle"></i>新手常见问题</a>
+            <a href="/tutorial-client-update-broken"><i class="ti ti-refresh-alert"></i>客户端更新后失效</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">客户端配置</span>
+            <a href="/tutorial-clash-verge-rev"><i class="ti ti-brand-windows"></i>Clash Verge Rev</a>
+            <a href="/tutorial-v2rayn"><i class="ti ti-brand-windows"></i>v2rayN（Windows）</a>
+            <a href="/tutorial-shadowrocket"><i class="ti ti-brand-apple"></i>Shadowrocket（iOS）</a>
+            <a href="/tutorial-clash-android"><i class="ti ti-brand-android"></i>Clash for Android</a>
+            <a href="/tutorial-sing-box"><i class="ti ti-device-mobile"></i>Sing-Box 全平台</a>
+            <a href="/tutorial" class="mega-more"><i class="ti ti-dots"></i>全部客户端 →</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">订阅与测速</span>
+            <a href="/tutorial-subscription-url"><i class="ti ti-link"></i>订阅链接导入</a>
+            <a href="/tutorial-subscription-format"><i class="ti ti-file-code"></i>订阅格式详解</a>
+            <a href="/tutorial-subscription-converter"><i class="ti ti-arrows-exchange"></i>订阅转换工具</a>
+            <a href="/tutorial-test-speed"><i class="ti ti-gauge"></i>节点测速方法</a>
+            <a href="/tutorial-batch-speed-test"><i class="ti ti-bolt"></i>批量测速优选</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">故障排查</span>
+            <a href="/tutorial-node-connection-failed"><i class="ti ti-plug-off"></i>节点连接失败</a>
+            <a href="/tutorial-subscription-update-failed"><i class="ti ti-refresh"></i>订阅更新失败</a>
+            <a href="/tutorial-slow-at-night"><i class="ti ti-clock"></i>晚高峰变慢</a>
+            <a href="/tutorial-chatgpt-access"><i class="ti ti-robot"></i>ChatGPT 打不开</a>
+            <a href="/free-node"><i class="ti ti-gift"></i>免费节点</a>
+          </div>
+        </div>
+      </div>
+      <a href="/download" class="nm">下载</a>
+      <div class="nav-item">
+        <a href="/tools" class="nm">工具<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">本地可用</span>
+            <a href="/base64" class="mega-link"><i class="ti ti-code"></i><span class="ml-body"><span class="ml-title">Base64 编解码</span><span class="ml-desc">纯前端，内容不上传</span></span></a>
+            <a href="/tools" class="mega-link"><i class="ti ti-tools"></i><span class="ml-body"><span class="ml-title">全部工具</span><span class="ml-desc">6 个工具入口</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">检测与转换 · 需第三方</span>
+            <a href="/ping" class="mega-link"><i class="ti ti-activity"></i><span class="ml-body"><span class="ml-title">连通性测试</span><span class="ml-desc">静态版转 ping.pe</span></span></a>
+            <a href="/ip" class="mega-link"><i class="ti ti-world"></i><span class="ml-body"><span class="ml-title">IP 查询</span><span class="ml-desc">静态版转 ip.sb</span></span></a>
+            <a href="/dns" class="mega-link"><i class="ti ti-server"></i><span class="ml-body"><span class="ml-title">DNS 检测</span><span class="ml-desc">静态版转 dnschecker</span></span></a>
+            <a href="/convert" class="mega-link"><i class="ti ti-arrows-exchange"></i><span class="ml-body"><span class="ml-title">订阅转换</span><span class="ml-desc">建议用本地客户端</span></span></a>
+            <a href="/unlock" class="mega-link"><i class="ti ti-device-tv"></i><span class="ml-body"><span class="ml-title">解锁检测</span><span class="ml-desc">需服务端发起请求</span></span></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<main class="wrap">
+  <div class="detail-layout">
+    <article class="detail-main gd-article">
+      <div class="breadcrumb"><a href="/">首页</a> / <a href="/guide">选购指南</a> / <a href="/guide#p2">网络线路与协议</a> / <span>Reality 协议</span></div><section class="gd-hero"><div class="gd-meta-row"><span class="gd-pill gd-pill--cat">02 Reality 协议</span><span class="gd-pill gd-pill--level">抗封锁黑科技</span><span class="gd-pill gd-pill--ok"><i class="ti ti-clock"></i> 阅读约 约 4 分钟</span><span class="gd-pill gd-pill--date">更新于 2026-11-11 · 对齐 10 家实测</span></div><h1>Reality 协议详解：借用权威站 TLS 证书的下一代抗封锁方案</h1><p class="gd-lead">被誉为近年抗审查架构最大跃迁的 Reality，彻底省去了服务器买域名、配网站和自签证书的风险点——当外部探测访问它时，看到的是货真价实的科技大厂官方 TLS 证书。</p><div class="gd-tldr"><div class="gd-tldr-head"><i class="ti ti-bolt"></i> 核心结论速览（TL;DR）</div><ul><li><strong>核心绝活</strong>：不自己备案或购置 TLS 证书，直接「借用」微软/Apple 等真实大厂 TLS 1.3 指纹做透明防探测挡箭牌。</li><li><strong>必对参数</strong>：需使用支持 Mihomo/Xray/Sing-Box 的现代客户端，并保持 <code>client-fingerprint (uTLS)</code> 开启。</li><li><strong>客观认知</strong>：它专治严格封锁与探测，但最终网速天花板依然取决于节点底层走的是专线还是普通公网。</li></ul></div><div class="gd-kpi-grid"><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--ok">0 域名</span><span class="gd-kpi-lbl">服务器端极简部署</span><span class="gd-kpi-sub">避免域名污染与证书特征泄露</span></div><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--ok">uTLS 指纹</span><span class="gd-kpi-lbl">模拟真实浏览器握手</span><span class="gd-kpi-sub">彻底摆脱 Go/Rust 特征暴露</span></div><div class="gd-kpi"><span class="gd-kpi-val">TLS 1.3</span><span class="gd-kpi-lbl">底层最低强加密标准</span><span class="gd-kpi-sub">不接受降级探测回落</span></div><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--warn">全端支持</span><span class="gd-kpi-lbl">Mihomo/Xray/小火箭</span><span class="gd-kpi-sub">停更老旧 Clash 客户端除外</span></div></div><div class="gd-toc"><span class="gd-toc-label">本篇目录：</span><a href="#why"><i class="ti ti-hash"></i>Reality 透传防探测原理</a><a href="#spec"><i class="ti ti-hash"></i>SNI / PublicKey / uTLS 详解</a><a href="#limit"><i class="ti ti-hash"></i>防封锁与网速的真实界限</a><a href="#faq"><i class="ti ti-hash"></i>常见问题</a></div></section><section class="gd-sec" id="why"><div class="gd-sec-h"><span class="gd-sec-num">01</span><h2>Reality 解决了传统 TLS 代理的哪两个致命痛点？</h2></div><p>以往搭建 VLESS/Trojan 节点必须买域名、配 Nginx 网页、续签 Let's Encrypt 证书——一旦域名或冷门小站证书上了重点监测黑名单，或者指纹与真浏览器对不上，就容易被精准阻断。<strong>Reality</strong>（Xray-core 创造的新一代方案）彻底推翻了这套思路：</p><div class="gd-flow-wrap"><div class="gd-flow"><span class="gd-flow-lbl">合法认证客户端 (匹配公钥/ShortId)</span><span class="gd-hop gd-hop--info">伪造 uTLS Chrome 指纹 + 借用大站 SNI</span><span class="gd-arrow">→</span><span class="gd-hop gd-hop--ok">服务器识别真密码 → 直接接管走加密高速代理</span></div><div class="gd-flow"><span class="gd-flow-lbl">审查探测器 / 未知访问</span><span class="gd-hop gd-hop--warn">服务器透传转发去微软/苹果等大厂真官网!</span><span class="gd-arrow">→</span><span class="gd-hop gd-hop--ok">返回 100% 真实巨头数字证书 · 完全无法区分</span></div></div></section><section class="gd-sec" id="spec"><div class="gd-sec-h"><span class="gd-sec-num">02</span><h2>看懂 Reality 配置里的三个核心参数</h2></div><div class="gd-table-wrap"><table class="gd-table"><thead><tr><th>关键参数名称</th><th>作用原理</th><th>连接异常排错重点</th></tr></thead><tbody><tr><td><code>serverName (SNI)</code></td><td>「借壳」伪装的目标真实知名海外域名（要求 TLS 1.3 + H2）</td><td>不得瞎改为国内站点或不支持 TLS 1.3 的老站</td></tr><tr><td><code>publicKey / shortId</code></td><td>验证你是否是合法机场用户而非随机探测器的密钥对</td><td>订阅同步缺失或被手动改错 1 个字符就会直接超时断开</td></tr><tr><td><code>client-fingerprint (uTLS)</code></td><td>把软件发出的 TLS 握手包伪装成真实 Chrome/Safari/iOS 浏览器指纹</td><td>在 Clash Verge / v2rayN 中务必保留 <code>chrome</code> / <code>ios</code> 等默认指纹，不要设空</td></tr></tbody></table></div></section><section class="gd-sec" id="limit"><div class="gd-sec-h"><span class="gd-sec-num">03</span><h2>Reality 是万能的吗？什么时候还是会比专线慢？</h2></div><div class="gd-callout gd-callout--warn"><strong class="gd-co-title"><i class="ti ti-alert-triangle"></i> 协议防屏蔽 ≠ 物理路径不拥堵</strong><div>Reality 能完美解决「端口被精准识别封掉」和「域名证书暴露」的问题，但它<strong>不能变出跨境物理光缆</strong>。如果底层只是绕远路拥堵的廉价公网 VPS，开了 Reality 晚高峰依然会因为公网丢包而降速。最佳形态是「靠谱中转/专线 + VLESS Reality」。</div></div></section><section class="gd-sec" id="faq"><div class="gd-sec-h"><span class="gd-sec-num">04</span><h2>高频疑问解答（FAQ）</h2></div><div class="faq-list"><details class="faq-item"><summary>Clash 客户端支持 Reality 吗？我看网上有人说 Clash 不支持？</summary><div class="answer"><p>2023 年底原版 Clash 内核停止维护前确实不支持；但如今全网标配的继承内核 <strong>Mihomo (Clash.Meta)</strong>、<strong>Clash Verge Rev</strong>、<strong>Shadowrocket</strong> 和 <strong>Sing-Box</strong> 早就 100% 原生完整支持 VLESS + Reality 了。</p></div></details><details class="faq-item"><summary>开启 Reality 需要我在电脑里额外信任安装什么证书吗？</summary><div class="answer"><p>完全不需要！因为借用的是微软、苹果等正规受信任公网大厂真实证书，切勿为了连接陌生软件去电脑根证书库安装来历不明的信任证书。</p></div></details></div></section><nav class="gd-pager" aria-label="上下篇指南"><a class="gd-pager-link" href="/trojan-protocol"><span class="gd-pager-dir">← 上一篇指南</span><span class="gd-pager-title">Trojan 协议详解：HTTPS 伪装原理、回落机制与适用场景</span></a><a class="gd-pager-link" href="/hysteria2-protocol" style="text-align:right;"><span class="gd-pager-dir">下一篇指南 →</span><span class="gd-pager-title">Hysteria2 协议详解：QUIC 拥塞控制、加速原理与使用取舍</span></a></nav>
+    </article>
+    <aside class="sidebar">
+  <div class="sidebar-widget sidebar-widget-pick">
+    <a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" rel="noopener nofollow sponsored" target="_blank">
+      <span class="pick-label">本月主推专线推荐</span>
+      <span class="pick-head">
+        <span class="pick-avatar"><img alt="" height="36" src="/assets/img/logos/yinxingren.png" style="object-fit: contain; border-radius: 6px;" width="36"/></span>
+        <span class="pick-name">隐形人</span>
+        <span class="pick-stars" title="本站评分">★★★★★</span>
+      </span>
+      <span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+      <span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+      <span class="pick-foot">
+        <span class="pick-price">¥7.27/月付 起</span>
+        <span class="pick-btn">访问官网 →</span>
+      </span>
+    </a>
+  </div>
+  <div class="sidebar-widget"><div class="sidebar-title">02 网络线路与协议</div><ul class="sidebar-list"><li><a href="/airport-line-types">线路架构 · 机场线路类型详解</a></li><li><a href="/what-is-iplc">IPLC 专线 · IPLC 专线详解</a></li><li><a href="/what-is-iepl">IEPL 专线 · 什么是 IEPL 专线</a></li><li><a href="/protocol-comparison">协议对比 · 机场代理协议对比</a></li><li><a href="/vless-protocol">VLESS 协议 · VLESS 协议详解</a></li><li><a href="/trojan-protocol">Trojan 协议 · Trojan 协议详解</a></li><li><a href="/reality-protocol" class="gd-sb-active">Reality 协议 · Reality 协议详解</a></li><li><a href="/hysteria2-protocol">Hysteria2 · Hysteria2 协议详解</a></li><li><a href="/what-is-node">节点基础 · 机场节点是什么</a></li><li><a href="/guide" style="font-weight:700;color:#0284c7;">← 返回全部 27 篇选购指南目录</a></li></ul></div>
+  <div class="sidebar-widget">
+    <div class="sidebar-title">优质专线直达</div>
+    <ul class="sidebar-list">
+      <li><a href="/yinxingren.html">#1 隐形人：全 IEPL 纯专线</a></li>
+      <li><a href="/muguangjiasu.html">#2 暮光加速：IPLC 高速专线</a></li>
+      <li><a href="/breezenet.html">#3 微风网络：优质 IPLC 专线</a></li>
+      <li><a href="/feimaoyun.html">#4 飞猫云：原生双ISP专线</a></li>
+      <li><a href="/feiv.html">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+      <li><a href="/lingdongyun.html">#6 灵动云：BGP 智能多线冗余</a></li>
+      <li><a href="/wavenet.html">#7 浪网 WaveNet：高速专线大带宽</a></li>
+      <li><a href="/laddercloud.html">#8 梯子云：高速专线天梯随行</a></li>
+      <li><a href="/quanqiuyun.html">#9 全球云：BGP+专线全球覆盖</a></li>
+      <li><a href="/wuyoulianjie.html">#10 无忧链接：新VLESS+IPLC专线</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-widget">
+    <div class="sidebar-title">热门标签</div>
+    <ul class="sidebar-list">
+      <li><a href="/tag-vless">VLESS</a></li>
+      <li><a href="/tag-hk">香港</a></li>
+      <li><a href="/tag-netflix">Netflix</a></li>
+      <li><a href="/tag-chatgpt">ChatGPT</a></li>
+      <li><a href="/tag-iplc">IPLC专线</a></li>
+    </ul>
+  </div>
+</aside>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+        <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">VPN机场</div>
+        <a href="/">VPN机场推荐</a>
+        <a href="/rankings">VPN机场榜单</a>
+        <a href="/cheap-airports">便宜VPN机场</a>
+        <a href="/reviews">VPN机场评测</a>
+        <a href="/coupons">VPN机场优惠码</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">内容</div>
+        <a href="/tutorial">VPN机场教程</a>
+        <a href="/guide">VPN机场指南</a>
+        <a href="/knowledge">VPN机场知识</a>
+        <a href="/streaming">流媒体/AI</a>
+        <a href="/tags">标签导航</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">资源</div>
+        <a href="/download">客户端下载</a>
+        <a href="/free-vpn">免费VPN</a>
+        <a href="/free-node">机场节点</a>
+        <a href="/tools">在线工具</a>
+        <a href="/apple-id">共享ID</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">关于</div>
+        <a href="/about">关于我们</a>
+        <a href="/faq">常见问题</a>
+        <a href="/methodology">测评方法</a>
+        <a href="/disclaimer">免责声明</a>
+        <a href="/privacy">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+      <span>VS 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+    </div>
+  </div>
+</footer>
+<button class="to-top" id="backToTop" aria-label="返回顶部"><i class="ti ti-arrow-up"></i></button>
+<script src="/assets/js/main.js"></script>
+
+<script defer src="//zztools.cc/stat/assets/js/tk.js" data-sid="8e6427d7bc551aea"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"11687e13bbaf45ecb062d6b8fcf1c940","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>灵动云 LingDong Cloud 机场测评：BGP多线冗余｜vpnjc.blog</title>
+<meta name="description" content="灵动云（LingDong Cloud）机场测评：主打BGP智能多线调度与不限设备。实测均速642Mbps、峰值935Mbps、延迟42.0ms，可用率99.85%。官方9档方案含拂风至凌霄周期月付（100G–1.5T）、穿云70G/月¥99年付、闲云/惊云/飞云3档永久包与¥680/月私人定制，券码 ld888。"/>
+<meta name="keywords" content="灵动云,LingDong Cloud,BGP多线机场,性价比机场,不限设备"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/lingdongyun.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="灵动云 LingDong Cloud 机场测评：BGP多线冗余｜vpnjc.blog"/>
+<meta property="og:description" content="灵动云（LingDong Cloud）机场测评：主打BGP智能多线调度与不限设备。实测均速642Mbps、峰值935Mbps、延迟42.0ms，可用率99.85%。官方9档方案含拂风至凌霄周期月付（100G–1.5T）、穿云70G/月¥99年付、闲云/惊云/飞云3档永久包与¥680/月私人定制，券码 ld888。"/>
+<meta property="og:url" content="https://vpnjc.blog/lingdongyun.html"/>
+<meta property="og:image" content="https://vpnjc.blog/assets/img/speedtest/2026-11-11-lingdongyun.png"/>
+  <link rel="icon" href="/favicon.ico?v=3">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=featured">
+</head>
+<body>
+<header class="nav">
+  <div class="container-xl">
+    <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="/" class="nm">首页</a>
+      <div class="nav-item">
+        <a href="/rankings" class="nm active" aria-current="page">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">榜单与评测</span>
+            <a href="/rankings" class="mega-link active"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选专线综合排名</span></span></a>
+            <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+            <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">机场评测</span><span class="ml-desc">10 篇独立详测档案</span></span></a>
+            <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维量化加权算法</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">精选专线直达</span>
+            <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+            <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+            <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+            <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+            <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+          </div>
+        </div>
+      </div>
+      <a class="nm" href="/coupons">优惠码</a>
+      <a class="nm" href="/guide">指南</a>
+      <a class="nm" href="/tutorial">教程</a>
+      <a class="nm" href="/download">下载</a>
+    </nav>
+    <button aria-label="菜单" class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="detail-layout">
+    <div class="detail-main">
+      <nav class="breadcrumb" style="display:flex; align-items:center; gap:8px; font-size:13px; color:#64748b; margin-bottom:16px;">
+        <a href="/" style="color:#0284c7; text-decoration:none;">首页</a>
+        <span>/</span>
+        <a href="/rankings" style="color:#0284c7; text-decoration:none;">全量榜单</a>
+        <span>/</span>
+        <span style="color:#0f172a; font-weight:600;">灵动云 深度评测档案</span>
+      </nav>
+
+      <!-- 品牌 Hero 展板 -->
+      <section class="airport-hero" style="background:#ffffff; border:1px solid #e0edfb; border-radius:18px; padding:24px; display:flex; gap:22px; flex-wrap:wrap; align-items:center; box-shadow:0 6px 20px rgba(2,132,199,0.06); margin-bottom:20px;">
+        <div style="width:72px; height:72px; border-radius:16px; overflow:hidden; border:2px solid #e0edfb; padding:4px; background:#fff; flex-shrink:0;">
+          <img src="/assets/img/logos/lingdongyun.png" alt="灵动云 Logo" style="width:100%; height:100%; object-fit:contain; border-radius:12px;">
+        </div>
+        <div style="flex:1; min-width:240px;">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
+            <h1 style="margin:0; font-size:24px; font-weight:800; color:#0f172a;">灵动云 <span style="font-size:14px; color:#64748b; font-weight:500;">LingDong Cloud · 机场测评</span></h1>
+            <span class="badge badge-rec" style="background:#e0f2fe; color:#0284c7; border:1px solid #bae6fd; font-weight:700;">精选专线</span>
+            <span style="background:#f0f9ff; color:#0369a1; border:1px solid #e0edfb; padding:3px 9px; border-radius:6px; font-size:12px; font-weight:600;">BGP 智能多线冗余</span>
+            <span style="color:#f59e0b; font-size:15px; margin-left:auto;">★★★★☆ <b style="color:#0284c7; background:#e0f2fe; padding:2px 8px; border-radius:99px; font-size:12.5px;">9.3分</b></span>
+          </div>
+          <p style="margin:0 0 10px; font-size:14px; line-height:1.6; color:#475569;">官方 9 档完整配套上线：涵盖拂风/驭浪/破晓/凌霄四档多周期方案（100GB–1.5TB/月）、穿云年付（70GB/月 · ¥99/年）、闲云/惊云/飞云三档永久不限时包（150GB/400GB/800GB）及 ¥680/月 至尊私人定制。全系不限速不限设备，常规档统一 1.0 倍率与 IEPL/IPLC 优化线路。</p>
+          <div style="display:flex; gap:16px; font-size:13px; color:#64748b; flex-wrap:wrap;">
+            <span><i class="ti ti-tag" style="color:#0ea5e9;"></i> 起步价格：<b style="color:#0284c7; font-size:14px;">¥8.25/月付 起</b></span>
+            <span><i class="ti ti-calendar" style="color:#0ea5e9;"></i> 开业于 2023</span>
+            <span><i class="ti ti-shield-check" style="color:#0ea5e9;"></i> 可用率：<b style="color:#16a34a;">99.85%</b></span>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; min-width:180px; align-items:stretch;">
+          <a href="https://varnexa.lingdongaff.com/#/?code=QcRK6OPG" class="btn btn-primary" target="_blank" rel="noopener nofollow sponsored" style="padding:12px 20px; font-size:14px; font-weight:700; text-align:center; text-decoration:none;"><i class="ti ti-external-link" style="margin-right:4px;"></i> 访问官网直达 ↗</a>
+          <button class="btn btn-detail copy-btn" data-url="ld888" type="button" style="padding:10px 16px; font-size:13px;"><i class="ti ti-copy" style="margin-right:4px;"></i> 复制专属优惠码</button>
+        </div>
+      </section>
+
+      <!-- 评分分解与综合指标 -->
+      <section class="card-box" style="background:#ffffff; border:1px solid #e0edfb; border-radius:16px; padding:22px; margin-bottom:20px;">
+        <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin:0 0 16px; display:flex; align-items:center; gap:8px;">
+          <i class="ti ti-chart-bar" style="color:#0284c7;"></i> 四维量化测评分解
+        </h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:14px;">
+          <div style="background:#f8fbff; border:1px solid #e0edfb; border-radius:12px; padding:14px; text-align:center;">
+            <span style="font-size:12px; color:#64748b; display:block; margin-bottom:4px;">稳定性表现</span>
+            <span style="font-size:22px; font-weight:800; color:#0284c7;">9.4 <small style="font-size:12px; color:#94a3b8;">/ 10</small></span>
+          </div>
+          <div style="background:#f8fbff; border:1px solid #e0edfb; border-radius:12px; padding:14px; text-align:center;">
+            <span style="font-size:12px; color:#64748b; display:block; margin-bottom:4px;">晚高峰平均延迟</span>
+            <span style="font-size:22px; font-weight:800; color:#0284c7;">42.0 ms</span>
+          </div>
+          <div style="background:#f8fbff; border:1px solid #e0edfb; border-radius:12px; padding:14px; text-align:center;">
+            <span style="font-size:12px; color:#64748b; display:block; margin-bottom:4px;">晚高峰丢包率</span>
+            <span style="font-size:22px; font-weight:800; color:#16a34a;">3.20% (平稳)</span>
+          </div>
+          <div style="background:#f8fbff; border:1px solid #e0edfb; border-radius:12px; padding:14px; text-align:center;">
+            <span style="font-size:12px; color:#64748b; display:block; margin-bottom:4px;">套餐性价比</span>
+            <span style="font-size:22px; font-weight:800; color:#0284c7;">9.4 <small style="font-size:12px; color:#94a3b8;">/ 10</small></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 今日综合测速图 -->
+<section class="card-box speedtest-daily-section" id="daily-speedtest" style="background:#ffffff; border:1px solid #e0edfb; border-radius:16px; padding:22px; margin-bottom:20px; box-shadow:0 4px 16px rgba(2,132,199,0.05);">
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+    <div>
+      <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin:0; display:flex; align-items:center; gap:8px;">
+        <i class="ti ti-gauge" style="color:#0284c7;"></i> 灵动云 2026-11-11 今日测速图
+      </h2>
+      <p style="margin:4px 0 0; font-size:12.5px; color:#64748b;">测试日期：2026-11-11 · 仅展示整网测速速率与稳定性指标，不展示单节点名称</p>
+    </div>
+  </div>
+  <a href="/assets/img/speedtest/2026-11-11-lingdongyun.png?v=20261111_2" target="_blank" title="点击查看大图" style="display:block; border-radius:12px; overflow:hidden; border:1px solid #dbeafe;">
+    <img src="/assets/img/speedtest/2026-11-11-lingdongyun.png?v=20261111_2" alt="灵动云 2026-11-11 今日综合测速图" style="width:100%; height:auto; display:block;">
+  </a>
+</section>
+<!-- 节点地区与实测数据 -->
+      <section class="card-box" style="background:#ffffff; border:1px solid #e0edfb; border-radius:16px; padding:22px; margin-bottom:20px;">
+        <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin:0 0 16px; display:flex; align-items:center; gap:8px;">
+          <i class="ti ti-server-2" style="color:#0284c7;"></i> 核心地区节点晚高峰实测表现
+        </h2>
+        <div style="overflow-x:auto;">
+          <table class="plan-table" style="width:100%; border-collapse:collapse; font-size:13.5px; text-align:left;">
+            <thead>
+              <tr style="border-bottom:2px solid #e0edfb; color:#475569; background:#f8fbff;">
+                <th style="padding:10px 14px;">节点地区与网络架构</th>
+                <th style="padding:10px 14px;">晚高峰延迟</th>
+                <th style="padding:10px 14px;">丢包率</th>
+                <th style="padding:10px 14px;">4K/8K 流媒体</th>
+                <th style="padding:10px 14px;">AI / ChatGPT 解锁</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #f1f5f9;">
+                <td style="padding:12px 14px; font-weight:600;">🇭🇰 中国香港 (BGP 智能多线冗余)</td>
+                <td style="padding:12px 14px; color:#0284c7; font-weight:700;">42.0 ms</td>
+                <td style="padding:12px 14px; color:#16a34a;">3.20% (平稳)</td>
+                <td style="padding:12px 14px;">⚡ 4K 1.2 秒开</td>
+                <td style="padding:12px 14px;"><span style="color:#16a34a; font-weight:600;">✅ 原生秒开</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f1f5f9;">
+                <td style="padding:12px 14px; font-weight:600;">🇯🇵 日本东京/大阪 (高速专线)</td>
+                <td style="padding:12px 14px; color:#0284c7; font-weight:700;">42.5 ms</td>
+                <td style="padding:12px 14px; color:#16a34a;">0.95% (极稳)</td>
+                <td style="padding:12px 14px;">⚡ 4K/8K 秒开</td>
+                <td style="padding:12px 14px;"><span style="color:#16a34a; font-weight:600;">✅ 支持 Abema / DMM</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f1f5f9;">
+                <td style="padding:12px 14px; font-weight:600;">🇸🇬 新加坡主力节点 (亚太中心)</td>
+                <td style="padding:12px 14px; color:#0284c7; font-weight:700;">48.2 ms</td>
+                <td style="padding:12px 14px; color:#16a34a;">0.80% (极稳)</td>
+                <td style="padding:12px 14px;">⚡ 4K 超清流畅</td>
+                <td style="padding:12px 14px;"><span style="color:#16a34a; font-weight:600;">✅ 原生 IP 完美解锁</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f1f5f9;">
+                <td style="padding:12px 14px; font-weight:600;">🇺🇸 美国西海岸 (大带宽专线)</td>
+                <td style="padding:12px 14px; color:#0284c7; font-weight:700;">128.0 ms</td>
+                <td style="padding:12px 14px; color:#16a34a;">1.10% (优异)</td>
+                <td style="padding:12px 14px;">⚡ YouTube 4K 秒开</td>
+                <td style="padding:12px 14px;"><span style="color:#16a34a; font-weight:600;">✅ Claude / ChatGPT 原生</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 套餐一览与定价 -->
+      <section class="card-box" style="background:#ffffff; border:1px solid #e0edfb; border-radius:16px; padding:22px; margin-bottom:20px;">
+        <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin:0 0 6px; display:flex; align-items:center; gap:8px;">
+          <i class="ti ti-receipt" style="color:#0284c7;"></i> 官方 9 档套餐方案与价格精算表
+        </h2>
+        <p style="margin:0 0 16px; font-size:13px; color:#64748b; line-height:1.6;">全面同步 灵动云 (LingDong Cloud) 官方现行 9 档配套：包含拂风、驭浪、破晓、凌霄 4 档多周期套餐（均支持月付、季付、半年付、年付），穿云年付超值优选（70GB/月 · ¥99/年），闲云、惊云、飞云 3 档一次性永久有效流量包及至尊私人定制方案；全系采用不限速、不限制设备数与 IEPL/IPLC 优化线路（常规月/季/年档统一 1.0 倍率计费）。</p>
+        <div style="overflow-x:auto;">
+          <table class="plan-table" style="width:100%; border-collapse:collapse; font-size:13.5px; text-align:left;">
+            <thead>
+              <tr style="border-bottom:2px solid #e0edfb; color:#475569; background:#f8fbff;">
+                <th style="padding:10px 14px; white-space:nowrap;">套餐方案</th>
+                <th style="padding:10px 14px; text-align:left;">流量额度与专线特性</th>
+                <th style="padding:10px 14px; white-space:nowrap;">官方定价</th>
+                <th style="padding:10px 14px; white-space:nowrap;">券后参考 (ld888)</th>
+                <th style="padding:10px 14px; white-space:nowrap;">单 G 成本</th>
+                <th style="padding:10px 14px; white-space:nowrap;">推荐定位</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 拂风</td>
+                <td style="text-align:left;">100GB/月 · IEPL/IPLC优化线路 · 1.0倍率 · 4周期 · 不限设备</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥20.00/月</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥16.0/月</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.16/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 主推轻量</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 驭浪</td>
+                <td style="text-align:left;">300GB/月 · IEPL/IPLC优化线路 · 1.0倍率 · 4周期 · 不限设备</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥50.00/月</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥40.0/月</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.13/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 热销主力</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 破晓</td>
+                <td style="text-align:left;">700GB/月 · 旗舰大流量 · IEPL/IPLC专线 · 1.0倍率 · 4周期</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥100.00/月</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥80.0/月</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.11/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 高频大流量</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 凌霄</td>
+                <td style="text-align:left;">1.5TB/月 (1500G) · 旗舰大流量 · IEPL/IPLC专线 · 1.0倍率 · 4周期</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥180.00/月</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥144.0/月</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.10/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 多设备/团队</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 穿云</td>
+                <td style="text-align:left;">70GB/月 (840G/年) · 每30天自动刷新 · 1个周期(年付) · IEPL/IPLC专线</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥99.00/年</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥79.2/年 (月均 ¥6.60)</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.09/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 年度超值</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 闲云 (小流量包)</td>
+                <td style="text-align:left;">150GB 总流量 · 永久有效 · 不按月清零/用完为止 · IEPL/IPLC线路</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥199.00/一次性</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥159.2/次</td>
+                <td style="color:#64748b; white-space:nowrap;">¥1.06/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★☆ 轻量备用</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 惊云 (标准流量包)</td>
+                <td style="text-align:left;">400GB 总流量 · 永久有效 · 不按月清零/用完为止 · IEPL/IPLC线路</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥499.00/一次性</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥399.2/次</td>
+                <td style="color:#64748b; white-space:nowrap;">¥1.00/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 商旅主力包</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动 · 飞云 (精英流量包)</td>
+                <td style="text-align:left;">800GB 总流量 · 旗舰级永久流量 · 用完为止 · IEPL/IPLC优化线路</td>
+                <td style="text-decoration:line-through; color:#94a3b8; white-space:nowrap;">¥899.00/一次性</td>
+                <td style="font-weight:800; color:#0284c7; white-space:nowrap;">¥719.2/次</td>
+                <td style="color:#64748b; white-space:nowrap;">¥0.90/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★☆ 精英不限时</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">灵动云 · 至尊私人定制</td>
+                <td style="text-align:left;">500GB/月 · 专线独享流量 · 热门地区按需配置定制节点 · 仅月付</td>
+                <td style="font-weight:700; color:#0f172a; white-space:nowrap;">¥680.00/月</td>
+                <td style="font-weight:700; color:#0284c7; white-space:nowrap;">按需求/联系客服</td>
+                <td style="color:#64748b; white-space:nowrap;">¥1.36/G</td>
+                <td style="white-space:nowrap;"><span style="font-size:12px; font-weight:600; color:#0284c7;">★★★★★ 高端私人定制</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:14px; padding:14px 16px; background:#f8fbff; border:1px solid #e0edfb; border-radius:12px; font-size:12.5px; color:#475569; line-height:1.7;">
+          <strong style="color:#0f172a; display:block; margin-bottom:4px;">配套详细说明：</strong>
+          <div>• <strong>周期会员四档（拂风 100GB · ¥20/月｜驭浪 300GB · ¥50/月｜破晓 700GB · ¥100/月｜凌霄 1.5TB · ¥180/月）：</strong>主推周期产品线，均支持 <strong>月付、季付、半年付、年付</strong> 4 个周期可选；全程不限速、不限设备数量，统一 1.0 倍率计费，覆盖香港、台湾、日本、新加坡、美国等热门地区并搭载 IEPL/IPLC 优化线路。</div>
+          <div>• <strong>灵动 · 穿云（70GB/月 · ¥99.00/年）：</strong>年度超值优选（1 个周期可选：年付），购买后每 30 天自动刷新 70GB 高速流量，官方折合月均 ¥8.25（用券码 <code>ld888</code> 折后约 ¥79.2/年 ≈ ¥6.60/月），兼顾低预算与全年稳定畅享。</div>
+          <div>• <strong>一次性永久流量包三档（闲云 150GB · ¥199｜惊云 400GB · ¥499｜飞云 800GB · ¥899）：</strong>一次购买长期有效，<strong>不按月清零、用完为止</strong>，无月租续费压力，同样覆盖港台日新美多地区及 IEPL/IPLC 专线加速，匹配轻度备用、跨境商旅及大容量需求。</div>
+          <div>• <strong>灵动云 · 至尊私人定制（500GB/月 · ¥680.00/月）：</strong>1 个周期可选（月付），每月包含 500GB 专线独享流量，支持香港、台湾、日本、新加坡、美国等热门地区按需配置定制节点，搭载高端 IEPL/IPLC 优化线路，不限速不限设备，满足高要求跨境私人网络需求。</div>
+        </div>
+      </section>
+
+      <!-- 专属优惠码卡片 -->
+      <section class="card-box ac-coupon lg" style="background:#f0f9ff; border:2px dashed #7dd3fc; border-radius:16px; padding:22px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div style="font-size:16px; font-weight:800; color:#0369a1; margin-bottom:4px;">
+            <i class="ti ti-ticket" style="margin-right:4px;"></i> 灵动云 专属优惠码：
+            <code class="copy-btn" data-url="ld888" title="点击一键复制" style="font-size:18px; padding:4px 12px; background:#ffffff; color:#0284c7; border:1px solid #bae6fd; border-radius:8px; cursor:pointer;">ld888</code>
+          </div>
+          <p style="margin:0; font-size:13px; color:#0284c7;">专属8折优惠码，穿云年付折后约¥79.2/年（月均¥6.60）；拂风至凌霄多周期档及闲云至飞云永久流量包均参考适用</p>
+        </div>
+        <button class="btn btn-primary copy-btn" data-url="ld888" type="button" style="padding:10px 20px; font-size:14px;"><i class="ti ti-copy" style="margin-right:4px;"></i> 一键复制优惠码</button>
+      </section>
+
+      <!-- 客户端与导入教程 -->
+      <section class="card-box" style="background:#ffffff; border:1px solid #e0edfb; border-radius:16px; padding:22px; margin-bottom:20px;">
+        <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin:0 0 16px; display:flex; align-items:center; gap:8px;">
+          <i class="ti ti-device-laptop" style="color:#0284c7;"></i> 全平台客户端支持与一键配置
+        </h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+          <div style="padding:12px; background:#f8fbff; border:1px solid #e0edfb; border-radius:10px;">
+            <span style="font-weight:700; color:#0f172a; display:block; margin-bottom:4px;"><i class="ti ti-brand-windows" style="color:#0284c7;"></i> Windows 客户端</span>
+            <span style="font-size:12.5px; color:#64748b;">支持 Clash Verge Rev / v2rayN / Sing-Box，一键导入订阅，智能分流。</span>
+          </div>
+          <div style="padding:12px; background:#f8fbff; border:1px solid #e0edfb; border-radius:10px;">
+            <span style="font-weight:700; color:#0f172a; display:block; margin-bottom:4px;"><i class="ti ti-brand-apple" style="color:#0284c7;"></i> macOS 客户端</span>
+            <span style="font-size:12.5px; color:#64748b;">支持 Clash Verge / Surge / Loon / Sing-box，Apple Silicon 芯片深度原生优化。</span>
+          </div>
+          <div style="padding:12px; background:#f8fbff; border:1px solid #e0edfb; border-radius:10px;">
+            <span style="font-weight:700; color:#0f172a; display:block; margin-bottom:4px;"><i class="ti ti-brand-android" style="color:#0284c7;"></i> Android 客户端</span>
+            <span style="font-size:12.5px; color:#64748b;">支持 Clash Meta for Android / v2rayNG / Sing-Box，省电低发热。</span>
+          </div>
+          <div style="padding:12px; background:#f8fbff; border:1px solid #e0edfb; border-radius:10px;">
+            <span style="font-weight:700; color:#0f172a; display:block; margin-bottom:4px;"><i class="ti ti-device-mobile" style="color:#0284c7;"></i> iOS (iPhone/iPad)</span>
+            <span style="font-size:12.5px; color:#64748b;">支持 Shadowrocket (小火箭) / Stash / Quantumult X，扫码秒级导入。</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部官网直达卡片 -->
+      <section class="card-box visit-box" style="background:linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%); border:2px solid #bae6fd; border-radius:18px; padding:28px; text-align:center; margin-bottom:20px;">
+        <h3 style="font-size:22px; font-weight:800; color:#0f172a; margin:0 0 8px;">立即体验 灵动云 官方服务</h3>
+        <p style="font-size:14px; color:#64748b; margin:0 0 18px;">使用专属优惠码 <b style="color:#0284c7;">ld888</b> 享专属折后特惠，稳定专线畅联全球！</p>
+        <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+          <a href="https://varnexa.lingdongaff.com/#/?code=QcRK6OPG" class="btn btn-primary" target="_blank" rel="noopener nofollow sponsored" style="padding:12px 28px; font-size:15px; font-weight:700; text-decoration:none;"><i class="ti ti-arrow-right" style="margin-right:4px;"></i> 前往官网注册购买</a>
+          <a href="/rankings" class="btn btn-detail" style="padding:12px 20px; font-size:14px; text-decoration:none;"><i class="ti ti-arrow-left" style="margin-right:4px;"></i> 返回全量榜单</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="sidebar-widget sidebar-widget-pick">
+        <a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" target="_blank" rel="noopener nofollow sponsored">
+          <span class="pick-label">本月主推专线推荐</span>
+          <span class="pick-head">
+            <span class="pick-avatar"><img src="/assets/img/logos/yinxingren.png" alt="" width="36" height="36" style="object-fit: contain; border-radius: 6px;"></span>
+            <span class="pick-name">隐形人</span>
+            <span class="pick-stars" title="本站评分">★★★★★</span>
+          </span>
+          <span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+          <span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+          <span class="pick-foot">
+            <span class="pick-price">¥7.27/月付 起</span>
+            <span class="pick-btn">访问官网 →</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="sidebar-title">优质专线直达</div>
+        <ul class="sidebar-list">
+    <li><a href="/yinxingren.html" class="">#1 隐形人：全 IEPL 纯专线</a></li>
+    <li><a href="/muguangjiasu.html" class="">#2 暮光加速：IPLC 高速专线</a></li>
+    <li><a href="/breezenet.html" class="">#3 微风网络：优质 IPLC 专线</a></li>
+    <li><a href="/feimaoyun.html" class="">#4 飞猫云：原生双ISP专线</a></li>
+    <li><a href="/feiv.html" class="">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+    <li><a href="/lingdongyun.html" class="on">#6 灵动云：BGP 智能多线冗余</a></li>
+    <li><a href="/wavenet.html" class="">#7 浪网 WaveNet：高速专线大带宽</a></li>
+    <li><a href="/laddercloud.html" class="">#8 梯子云：高速专线天梯随行</a></li>
+    <li><a href="/quanqiuyun.html" class="">#9 全球云：BGP+专线全球覆盖</a></li>
+    <li><a href="/wuyoulianjie.html" class="">#10 无忧链接：新VLESS+IPLC专线</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="sidebar-title">热门标签</div>
+        <ul class="sidebar-list">
+          <li><a href="/tag-vless">VLESS</a></li>
+          <li><a href="/tag-hk">香港</a></li>
+          <li><a href="/tag-netflix">Netflix</a></li>
+          <li><a href="/tag-chatgpt">ChatGPT</a></li>
+          <li><a href="/tag-iplc">IPLC专线</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+        <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">VPN机场</div>
+        <a href="/">VPN机场推荐</a>
+        <a href="/rankings">VPN机场榜单</a>
+        <a href="/cheap-airports">便宜VPN机场</a>
+        <a href="/reviews">VPN机场评测</a>
+        <a href="/coupons">VPN机场优惠码</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">内容</div>
+        <a href="/tutorial">VPN机场教程</a>
+        <a href="/guide">VPN机场指南</a>
+        <a href="/knowledge">VPN机场知识</a>
+        <a href="/streaming">流媒体/AI</a>
+        <a href="/tags">标签导航</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">资源</div>
+        <a href="/download">客户端下载</a>
+        <a href="/free-vpn">免费VPN</a>
+        <a href="/free-node">机场节点</a>
+        <a href="/tools">在线工具</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">关于</div>
+        <a href="/about">关于我们</a>
+        <a href="/faq">常见问题</a>
+        <a href="/methodology">测评方法</a>
+        <a href="/disclaimer">免责声明</a>
+        <a href="/privacy">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+      <span>V 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+    </div>
+  </div>
+</footer>
+
+<button aria-label="返回顶部" class="to-top" id="backToTop"><i class="ti ti-arrow-up"></i></button>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机场DNS设置优化指南：DoH防污染、Fake-IP模式与防泄漏｜vpnjc.blog</title>
+<meta name="description" content="讲解本地代理工具中国内分流与境外域名DNS分离架构，对比Redir-Host与Fake-IP工作特点，解决配置正确节点后依然提示域名打不开或出口泄漏问题。"/>
+<meta name="keywords" content="机场DNS设置,Fake-IP,DoH加密,DNS防污染,分流配置"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/dns-config-guide"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="机场DNS设置优化指南：DoH防污染、Fake-IP模式与防泄漏｜vpnjc.blog"/>
+<meta property="og:description" content="讲解本地代理工具中国内分流与境外域名DNS分离架构，对比Redir-Host与Fake-IP工作特点，解决配置正确节点后依然提示域名打不开或出口泄漏问题。"/>
+<meta property="og:url" content="https://vpnjc.blog/dns-config-guide"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=guide2026">
+</head>
+<body>
+<header class="nav">
+  <div class="container-xl">
+    <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="/" class="nm">首页</a>
+      <div class="nav-item">
+        <a href="/rankings" class="nm">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">榜单与评测</span>
+            <a href="/rankings" class="mega-link"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选VPN机场按评分排序</span></span></a>
+            <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+            <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">VPN机场评测</span><span class="ml-desc">10 篇逐家实测</span></span></a>
+            <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维加权怎么算</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">按需求筛选</span>
+            <a href="/cheap-airports" class="mega-link"><i class="ti ti-coin"></i><span class="ml-body"><span class="ml-title">便宜VPN机场</span><span class="ml-desc">起步价 15 元以内</span></span></a>
+            <a href="/traffic" class="mega-link"><i class="ti ti-database"></i><span class="ml-body"><span class="ml-title">按量VPN机场</span><span class="ml-desc">流量包不过期</span></span></a>
+            <a href="/tags" class="mega-link"><i class="ti ti-tags"></i><span class="ml-body"><span class="ml-title">标签导航</span><span class="ml-desc">28 个有效标签按协议/地区找</span></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/reviews" class="nm">评测<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">评测中心</span>
+            <a href="/reviews" class="mega-link"><i class="ti ti-clipboard-list"></i><span class="ml-body"><span class="ml-title">全部评测</span><span class="ml-desc">10 篇实测评测</span></span></a>
+            <a href="/methodology" class="mega-link"><i class="ti ti-chart-bar"></i><span class="ml-body"><span class="ml-title">评分标准</span><span class="ml-desc">稳定性/性能/价格/风险</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">精选专线直达</span>
+            <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+            <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+            <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+            <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+            <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+          </div>
+        </div>
+      </div>
+      <a href="/coupons" class="nm">优惠码</a>
+      <div class="nav-item">
+        <a href="/guide" class="nm active" aria-current="page">指南<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-mega">
+          <div class="mega-col">
+            <span class="mega-title">入门选购</span>
+            <a href="/guide"><i class="ti ti-book"></i>指南总览</a>
+            <a href="/airport-beginner-guide"><i class="ti ti-school"></i>新手入门</a>
+            <a href="/airport-comparison-guide"><i class="ti ti-scale"></i>横评选型</a>
+            <a href="/airport-plan-guide"><i class="ti ti-receipt"></i>套餐怎么选</a>
+            <a href="/multi-device-plan"><i class="ti ti-devices"></i>多设备方案</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">线路与协议</span>
+            <a href="/airport-line-types"><i class="ti ti-route"></i>线路类型详解</a>
+            <a href="/what-is-iplc"><i class="ti ti-server-2"></i>IPLC 专线</a>
+            <a href="/what-is-iepl"><i class="ti ti-server"></i>IEPL 专线</a>
+            <a href="/protocol-comparison"><i class="ti ti-git-compare"></i>代理协议对比</a>
+            <a href="/what-is-node"><i class="ti ti-help-circle"></i>节点是什么</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">使用与优化</span>
+            <a href="/node-region-guide"><i class="ti ti-world"></i>节点地区选择</a>
+            <a href="/node-multiplier-guide"><i class="ti ti-chart-bar"></i>节点倍率</a>
+            <a href="/node-utility-guide"><i class="ti ti-plug"></i>节点通用性</a>
+            <a href="/speed-metrics-guide"><i class="ti ti-gauge"></i>测速指标解读</a>
+            <a href="/dns-config-guide" class="active" aria-current="page"><i class="ti ti-server"></i>DNS 设置</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">避坑与安全</span>
+            <a href="/airport-scam-prevention"><i class="ti ti-alert-triangle"></i>跑路识别</a>
+            <a href="/airport-support-guide"><i class="ti ti-headset"></i>售后与工单</a>
+            <a href="/subscription-security-guide"><i class="ti ti-shield-lock"></i>订阅安全</a>
+            <a href="/coupon-tips"><i class="ti ti-ticket"></i>优惠码避坑</a>
+            <a href="/airport-account-guide"><i class="ti ti-user-cog"></i>账号与订阅管理</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/tutorial" class="nm">教程<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-mega">
+          <div class="mega-col">
+            <span class="mega-title">入门基础</span>
+            <a href="/tutorial#start"><i class="ti ti-books"></i>新手推荐路径</a>
+            <a href="/tutorial-airport-vs-vpn"><i class="ti ti-arrows-exchange"></i>机场与 VPN 的区别</a>
+            <a href="/tutorial-airport-faq"><i class="ti ti-help-circle"></i>新手常见问题</a>
+            <a href="/tutorial-client-update-broken"><i class="ti ti-refresh-alert"></i>客户端更新后失效</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">客户端配置</span>
+            <a href="/tutorial-clash-verge-rev"><i class="ti ti-brand-windows"></i>Clash Verge Rev</a>
+            <a href="/tutorial-v2rayn"><i class="ti ti-brand-windows"></i>v2rayN（Windows）</a>
+            <a href="/tutorial-shadowrocket"><i class="ti ti-brand-apple"></i>Shadowrocket（iOS）</a>
+            <a href="/tutorial-clash-android"><i class="ti ti-brand-android"></i>Clash for Android</a>
+            <a href="/tutorial-sing-box"><i class="ti ti-device-mobile"></i>Sing-Box 全平台</a>
+            <a href="/tutorial" class="mega-more"><i class="ti ti-dots"></i>全部客户端 →</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">订阅与测速</span>
+            <a href="/tutorial-subscription-url"><i class="ti ti-link"></i>订阅链接导入</a>
+            <a href="/tutorial-subscription-format"><i class="ti ti-file-code"></i>订阅格式详解</a>
+            <a href="/tutorial-subscription-converter"><i class="ti ti-arrows-exchange"></i>订阅转换工具</a>
+            <a href="/tutorial-test-speed"><i class="ti ti-gauge"></i>节点测速方法</a>
+            <a href="/tutorial-batch-speed-test"><i class="ti ti-bolt"></i>批量测速优选</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">故障排查</span>
+            <a href="/tutorial-node-connection-failed"><i class="ti ti-plug-off"></i>节点连接失败</a>
+            <a href="/tutorial-subscription-update-failed"><i class="ti ti-refresh"></i>订阅更新失败</a>
+            <a href="/tutorial-slow-at-night"><i class="ti ti-clock"></i>晚高峰变慢</a>
+            <a href="/tutorial-chatgpt-access"><i class="ti ti-robot"></i>ChatGPT 打不开</a>
+            <a href="/free-node"><i class="ti ti-gift"></i>免费节点</a>
+          </div>
+        </div>
+      </div>
+      <a href="/download" class="nm">下载</a>
+      <div class="nav-item">
+        <a href="/tools" class="nm">工具<i class="ti ti-chevron-down nav-caret"></i></a>
+        <div class="nav-sub nav-wide">
+          <div class="mega-col">
+            <span class="mega-title">本地可用</span>
+            <a href="/base64" class="mega-link"><i class="ti ti-code"></i><span class="ml-body"><span class="ml-title">Base64 编解码</span><span class="ml-desc">纯前端，内容不上传</span></span></a>
+            <a href="/tools" class="mega-link"><i class="ti ti-tools"></i><span class="ml-body"><span class="ml-title">全部工具</span><span class="ml-desc">6 个工具入口</span></span></a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-title">检测与转换 · 需第三方</span>
+            <a href="/ping" class="mega-link"><i class="ti ti-activity"></i><span class="ml-body"><span class="ml-title">连通性测试</span><span class="ml-desc">静态版转 ping.pe</span></span></a>
+            <a href="/ip" class="mega-link"><i class="ti ti-world"></i><span class="ml-body"><span class="ml-title">IP 查询</span><span class="ml-desc">静态版转 ip.sb</span></span></a>
+            <a href="/dns" class="mega-link"><i class="ti ti-server"></i><span class="ml-body"><span class="ml-title">DNS 检测</span><span class="ml-desc">静态版转 dnschecker</span></span></a>
+            <a href="/convert" class="mega-link"><i class="ti ti-arrows-exchange"></i><span class="ml-body"><span class="ml-title">订阅转换</span><span class="ml-desc">建议用本地客户端</span></span></a>
+            <a href="/unlock" class="mega-link"><i class="ti ti-device-tv"></i><span class="ml-body"><span class="ml-title">解锁检测</span><span class="ml-desc">需服务端发起请求</span></span></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<main class="wrap">
+  <div class="detail-layout">
+    <article class="detail-main gd-article">
+      <div class="breadcrumb"><a href="/">首页</a> / <a href="/guide">选购指南</a> / <a href="/guide#p3">测速与使用优化</a> / <span>DNS 与防泄漏</span></div><section class="gd-hero"><div class="gd-meta-row"><span class="gd-pill gd-pill--cat">03 DNS 与防泄漏</span><span class="gd-pill gd-pill--level">进阶必读</span><span class="gd-pill gd-pill--ok"><i class="ti ti-clock"></i> 阅读约 约 5 分钟</span><span class="gd-pill gd-pill--date">更新于 2026-11-11 · 对齐 10 家实测</span></div><h1>机场 DNS 设置详解：DoH 加密、Fake-IP 分流与防污染指南</h1><p class="gd-lead">如果说专线是高速路，DNS 就是路口指路牌。指路牌错了（被污染），车再快也开进死胡同。弄清「国内走国内、海外走境外 Fake-IP」一条核心准则就够用一辈子。</p><div class="gd-tldr"><div class="gd-tldr-head"><i class="ti ti-bolt"></i> 核心结论速览（TL;DR）</div><ul><li><strong>核心原则</strong>：国内域名由国内 DoH 解析保证秒开国内 CDN，海外域名交由远程代理服务器解析彻底防污染。</li><li><strong>Fake-IP 首选</strong>：Clash Verge / Shadowrocket 优先保持 Fake-IP + 规则分流，网页打开最快、最防 DNS 泄漏。</li><li><strong>不要乱改网卡</strong>：电脑本地系统网卡保留默认自动 DNS，避免和浏览器安全 DNS / 客户端形成死循环冲突。</li></ul></div><div class="gd-kpi-grid"><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--ok">Fake-IP</span><span class="gd-kpi-lbl">主流防污染引擎</span><span class="gd-kpi-sub">本地零真实海外解析、响应最快</span></div><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--ok">DoH</span><span class="gd-kpi-lbl">加密 DNS 协议</span><span class="gd-kpi-sub">防止运营商明文劫持与窥探</span></div><div class="gd-kpi"><span class="gd-kpi-val gd-kpi-val--warn">禁用浏览器 DoH</span><span class="gd-kpi-lbl">排障最常见杀手</span><span class="gd-kpi-sub">避免 Chrome 安全 DNS 绕过客户端</span></div><div class="gd-kpi"><span class="gd-kpi-val">系统保持自动</span><span class="gd-kpi-lbl">网卡 DNS 设置铁律</span><span class="gd-kpi-sub">统一交给客户端全权分流接管</span></div></div><div class="gd-toc"><span class="gd-toc-label">本篇目录：</span><a href="#why"><i class="ti ti-hash"></i>DNS 污染与内外分流链路</a><a href="#mode"><i class="ti ti-hash"></i>Fake-IP vs Redir-Host 对比</a><a href="#config"><i class="ti ti-hash"></i>一键复制 DoH 与配置片段</a><a href="#troubleshoot"><i class="ti ti-hash"></i>五大异常速查排障</a><a href="#faq"><i class="ti ti-hash"></i>常见问题</a></div></section><section class="gd-sec" id="why"><div class="gd-sec-h"><span class="gd-sec-num">01</span><h2>为什么 DNS 一配错，「节点延迟 30ms」照样打不开国外网站？</h2></div><p>访问一个网址永远分两步：<strong>① DNS 查询</strong>（问清楚域名背后的目标 IP）→ <strong>② 建立连接</strong>。如果第一步就在国内本地宽带遭到了「DNS 污染」（返回了虚假海外 IP 或无法联通的内网 IP），后续哪怕专线通道通天也无济于事；反过来若把国内域名（淘宝/支付宝）塞给境外远端 DNS 解析，则会把国内网站路由解析去海外 CDN，导致看国内网页反而卡半天。</p><div class="gd-flow-wrap"><div class="gd-flow"><span class="gd-flow-lbl">错误配法（易污染/慢）</span><span class="gd-hop gd-hop--bad">本地直接直连查询海外域名</span><span class="gd-arrow">→</span><span class="gd-hop gd-hop--bad">返回被污染错误 IP / 泄露访问记录</span></div><div class="gd-flow"><span class="gd-flow-lbl">正确内外分流 / Fake-IP</span><span class="gd-hop gd-hop--ok">国内域名 → 本地阿里/腾讯 DNS 快速直连</span><span class="gd-arrow">→</span><span class="gd-hop gd-hop--ok">海外域名 → Fake-IP 假 IP 交由境外节点远程真实解析!</span></div></div></section><section class="gd-sec" id="mode"><div class="gd-sec-h"><span class="gd-sec-num">02</span><h2>Clash 系最核心两种模式：Fake-IP vs Redir-Host 怎么选</h2></div><div class="gd-table-wrap"><table class="gd-table"><thead><tr><th>对比特性</th><th>Fake-IP 模式（现代主流默认）</th><th>Redir-Host 模式（传统直连解析）</th></tr></thead><tbody><tr><td>工作机制</td><td>客户端瞬间下发 <code>198.18.x.x</code> 假内网 IP 骗过浏览器，把真实域名打包给远程服务端解析</td><td>本地通过并发 DoH DNS 请求拿到真 IP 再匹配路由分流</td></tr><tr><td>防 DNS 污染 / 泄漏表现</td><td><span class="gd-badge gd-badge--ok">几乎 100% 物理根治污染与泄漏</span></td><td>依赖 DoH 配置与分流规则严密性，易踩坑</td></tr><tr><td>网页首屏响应耗时</td><td><span class="gd-badge gd-badge--ok">极快（省去了本地跨网等待 DNS 往返）</span></td><td>需多等 1 个 DNS 解析往返耗时</td></tr><tr><td>适用冲突与取舍</td><td>极少数需要真实局域网回环的 BT/PT 下载软件或内网开发需排除域名</td><td>适合必须本地精准拿真 IP 做调试的软路由或特殊 NAS 场景</td></tr></tbody></table></div></section><section class="gd-sec" id="config"><div class="gd-sec-h"><span class="gd-sec-num">03</span><h2>一键复制：安全加密 DNS 地址与 Mihomo 分流精简示范</h2></div><p>绝大多数机场订阅已随配好规范 DNS；若你在自建配置或排障中需要手动填入可靠的防劫持加密 DNS，可直接使用以下标准参数：</p><div class="gd-code-box"><div class="gd-code-head"><span><i class="ti ti-terminal-2"></i> Clash / Mihomo 经典内外分流 DNS 参考配置片段 (YAML)</span><button type="button" class="copy-btn" data-url="dns:&#10;  enable: true&#10;  ipv6: false&#10;  enhanced-mode: fake-ip&#10;  fake-ip-range: 198.18.0.1/16&#10;  fake-ip-filter:&#10;    - &quot;*.lan&quot;&#10;    - &quot;*.local&quot;&#10;    - &quot;localhost.ptlogin2.qq.com&quot;&#10;  default-nameserver:&#10;    - 223.5.5.5&#10;    - 119.29.29.29&#10;  nameserver:&#10;    - https://dns.alidns.com/dns-query&#10;    - https://doh.pub/dns-query&#10;  proxy-server-nameserver:&#10;    - https://dns.alidns.com/dns-query" style="padding:4px 12px; min-height:28px; font-size:12px;">复制配置片段</button></div><pre>dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - &quot;*.lan&quot;
+    - &quot;*.local&quot;
+    - &quot;localhost.ptlogin2.qq.com&quot;
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query</pre></div><div class="gd-table-wrap"><table class="gd-table"><thead><tr><th>适用归属</th><th>服务名称</th><th>一键复制常用地址（DoH / IP）</th></tr></thead><tbody><tr><td>国内直连 / Bootstrap</td><td>阿里公共 DNS</td><td><code class="copy-btn" data-url="https://dns.alidns.com/dns-query" style="cursor:pointer;">https://dns.alidns.com/dns-query</code> (或 <code>223.5.5.5</code>)</td></tr><tr><td>国内直连备选</td><td>腾讯 DNSPod</td><td><code class="copy-btn" data-url="https://doh.pub/dns-query" style="cursor:pointer;">https://doh.pub/dns-query</code> (或 <code>119.29.29.29</code>)</td></tr><tr><td>境外代理解析（配合 fallback）</td><td>Cloudflare DNS</td><td><code class="copy-btn" data-url="https://cloudflare-dns.com/dns-query" style="cursor:pointer;">https://cloudflare-dns.com/dns-query</code></td></tr><tr><td>境外代理解析备选</td><td>Google DNS</td><td><code class="copy-btn" data-url="https://dns.google/dns-query" style="cursor:pointer;">https://dns.google/dns-query</code></td></tr></tbody></table></div></section><section class="gd-sec" id="troubleshoot"><div class="gd-sec-h"><span class="gd-sec-num">04</span><h2>五大常见 DNS 异常快速排障对照表</h2></div><div class="gd-table-wrap"><table class="gd-table"><thead><tr><th>遇到的问题现象</th><th>高概率背后元凶</th><th>一句话极速解决</th></tr></thead><tbody><tr><td>连接后能打开国内站，海外全部超时打不开</td><td>浏览器开着「安全 DNS (DoH)」绕过了客户端，或本地 DNS 污染</td><td>关闭浏览器内单独开启的第三方安全 DNS，开启客户端 <strong>Fake-IP / TUN</strong></td></tr><tr><td>连上代理后国内淘宝、微信图片加载巨慢</td><td>国内站域名错误走去国外节点 DNS 解析，被派到了境外 CDN</td><td>切回 <code>Rule 规则模式</code> 并确认 <code>nameserver</code> 用国内 DoH</td></tr><tr><td>打开微信内置浏览器或某些桌面软件不翻墙</td><td>系统代理未被这些老应用尊重</td><td>直接在客户端开启 <strong>TUN 虚拟网卡模式</strong> 强接管系统全部 DNS 53 端口</td></tr><tr><td>在线检测页报告「DNS 泄漏为本地电信/移动 IP」</td><td>系统开启了独立 IPv6 DNS 裸漏或浏览器 QUIC HTTP/3 直连抢跑</td><td>在客户端关闭 IPv6 或配置里设 <code>ipv6: false</code>，再用 <a href='/dns'>站内检测</a> 核实</td></tr></tbody></table></div></section><section class="gd-sec" id="faq"><div class="gd-sec-h"><span class="gd-sec-num">05</span><h2>高频疑问解答（FAQ）</h2></div><div class="faq-list"><details class="faq-item"><summary>用机场自带现成一键订阅时，需要我自己照着上面的 YAML 去改 DNS 吗？</summary><div class="answer"><p>完全不需要！只要机场官方订阅本身正常、开启着客户端规则模式，请优先保持官方默认（95% 正规专线机场已在下发订阅端内置好了完善防泄漏 DNS 分流），自己盲目叠加双层分流反而易产生端口冲突。</p></div></details><details class="faq-item"><summary>电脑 Windows / Mac 的系统「网络设置」里需要把首选 DNS 手动改成 8.8.8.8 吗？</summary><div class="answer"><p><strong>千万不要！</strong>电脑系统网卡上的 DNS 请保持「自动获取 (DHCP)」或常规本地快速 DNS（如 223.5.5.5）；手动在网卡里写死 8.8.8.8 会导致不开梯子时完全断网，甚至开着梯子时因为部分内网直连走不通 8.8.8.8 引发全局转圈卡顿。</p></div></details></div></section><nav class="gd-pager" aria-label="上下篇指南"><a class="gd-pager-link" href="/node-utility-guide"><span class="gd-pager-dir">← 上一篇指南</span><span class="gd-pager-title">机场节点通用性解析：IP 性质、家宽原生 vs 机房与多场景覆盖</span></a><a class="gd-pager-link" href="/airport-scam-prevention" style="text-align:right;"><span class="gd-pager-dir">下一篇指南 →</span><span class="gd-pager-title">机场跑路怎么提前识别？高危信号体检与止损指南</span></a></nav>
+    </article>
+    <aside class="sidebar">
+  <div class="sidebar-widget sidebar-widget-pick">
+    <a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" rel="noopener nofollow sponsored" target="_blank">
+      <span class="pick-label">本月主推专线推荐</span>
+      <span class="pick-head">
+        <span class="pick-avatar"><img alt="" height="36" src="/assets/img/logos/yinxingren.png" style="object-fit: contain; border-radius: 6px;" width="36"/></span>
+        <span class="pick-name">隐形人</span>
+        <span class="pick-stars" title="本站评分">★★★★★</span>
+      </span>
+      <span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+      <span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+      <span class="pick-foot">
+        <span class="pick-price">¥7.27/月付 起</span>
+        <span class="pick-btn">访问官网 →</span>
+      </span>
+    </a>
+  </div>
+  <div class="sidebar-widget"><div class="sidebar-title">03 测速与使用优化</div><ul class="sidebar-list"><li><a href="/speed-metrics-guide">测速解读 · 机场测速指标解读</a></li><li><a href="/airport-line-quality-guide">自测实战 · 机场线路质量自测实战</a></li><li><a href="/node-region-guide">地区选择 · 机场节点地区选择</a></li><li><a href="/node-multiplier-guide">节点倍率 · 机场节点倍率详解</a></li><li><a href="/node-utility-guide">节点通用性 · 机场节点通用性解析</a></li><li><a href="/dns-config-guide" class="gd-sb-active">DNS 与防泄漏 · 机场 DNS 设置详解</a></li><li><a href="/guide" style="font-weight:700;color:#0284c7;">← 返回全部 27 篇选购指南目录</a></li></ul></div>
+  <div class="sidebar-widget">
+    <div class="sidebar-title">优质专线直达</div>
+    <ul class="sidebar-list">
+      <li><a href="/yinxingren.html">#1 隐形人：全 IEPL 纯专线</a></li>
+      <li><a href="/muguangjiasu.html">#2 暮光加速：IPLC 高速专线</a></li>
+      <li><a href="/breezenet.html">#3 微风网络：优质 IPLC 专线</a></li>
+      <li><a href="/feimaoyun.html">#4 飞猫云：原生双ISP专线</a></li>
+      <li><a href="/feiv.html">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+      <li><a href="/lingdongyun.html">#6 灵动云：BGP 智能多线冗余</a></li>
+      <li><a href="/wavenet.html">#7 浪网 WaveNet：高速专线大带宽</a></li>
+      <li><a href="/laddercloud.html">#8 梯子云：高速专线天梯随行</a></li>
+      <li><a href="/quanqiuyun.html">#9 全球云：BGP+专线全球覆盖</a></li>
+      <li><a href="/wuyoulianjie.html">#10 无忧链接：新VLESS+IPLC专线</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-widget">
+    <div class="sidebar-title">热门标签</div>
+    <ul class="sidebar-list">
+      <li><a href="/tag-vless">VLESS</a></li>
+      <li><a href="/tag-hk">香港</a></li>
+      <li><a href="/tag-netflix">Netflix</a></li>
+      <li><a href="/tag-chatgpt">ChatGPT</a></li>
+      <li><a href="/tag-iplc">IPLC专线</a></li>
+    </ul>
+  </div>
+</aside>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+        <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">VPN机场</div>
+        <a href="/">VPN机场推荐</a>
+        <a href="/rankings">VPN机场榜单</a>
+        <a href="/cheap-airports">便宜VPN机场</a>
+        <a href="/reviews">VPN机场评测</a>
+        <a href="/coupons">VPN机场优惠码</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">内容</div>
+        <a href="/tutorial">VPN机场教程</a>
+        <a href="/guide">VPN机场指南</a>
+        <a href="/knowledge">VPN机场知识</a>
+        <a href="/streaming">流媒体/AI</a>
+        <a href="/tags">标签导航</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">资源</div>
+        <a href="/download">客户端下载</a>
+        <a href="/free-vpn">免费VPN</a>
+        <a href="/free-node">机场节点</a>
+        <a href="/tools">在线工具</a>
+        <a href="/apple-id">共享ID</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-head">关于</div>
+        <a href="/about">关于我们</a>
+        <a href="/faq">常见问题</a>
+        <a href="/methodology">测评方法</a>
+        <a href="/disclaimer">免责声明</a>
+        <a href="/privacy">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+      <span>VS 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+    </div>
+  </div>
+</footer>
+<button class="to-top" id="backToTop" aria-label="返回顶部"><i class="ti ti-arrow-up"></i></button>
+<script src="/assets/js/main.js"></script>
+
+<script defer src="//zztools.cc/stat/assets/js/tk.js" data-sid="8e6427d7bc551aea"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"11687e13bbaf45ecb062d6b8fcf1c940","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

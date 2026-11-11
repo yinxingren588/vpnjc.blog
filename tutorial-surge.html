@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surge进阶使用教程：macOS/iOS旗舰级代理与网络调试技巧｜vpnjc.blog</title>
+<meta name="description" content="介绍苹果生态旗舰代理套件Surge核心价值：托管机场配置转换、自定义规则分流模块、HTTP抓包重写与高效策略切换，适合高阶极客与开发者。"/>
+<meta name="keywords" content="Surge教程,苹果旗舰代理,macOS iOS网络调试"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/tutorial-surge"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="Surge进阶使用教程：macOS/iOS旗舰级代理与网络调试技巧｜vpnjc.blog"/>
+<meta property="og:description" content="介绍苹果生态旗舰代理套件Surge核心价值：托管机场配置转换、自定义规则分流模块、HTTP抓包重写与高效策略切换，适合高阶极客与开发者。"/>
+<meta property="og:url" content="https://vpnjc.blog/tutorial-surge"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="nav">
+
+      <div class="container-xl">
+
+        <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+
+        <nav class="nav-menu" id="navMenu">
+
+          <a href="/" class="nm">首页</a>
+
+          <div class="nav-item">
+
+            <a href="/rankings" class="nm">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">榜单与评测</span>
+
+                <a href="/rankings" class="mega-link"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选专线按评分排序</span></span></a>
+
+                <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">VPN机场评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维加权怎么算</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">按需求筛选</span>
+
+                <a href="/cheap-airports" class="mega-link"><i class="ti ti-coin"></i><span class="ml-body"><span class="ml-title">便宜VPN机场</span><span class="ml-desc">起步价 15 元以内</span></span></a>
+
+                <a href="/traffic" class="mega-link"><i class="ti ti-database"></i><span class="ml-body"><span class="ml-title">按量VPN机场</span><span class="ml-desc">流量包不过期</span></span></a>
+
+                <a href="/tags" class="mega-link"><i class="ti ti-tags"></i><span class="ml-body"><span class="ml-title">标签导航</span><span class="ml-desc">28 个有效标签按协议/地区找</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/reviews" class="nm">评测<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">评测中心</span>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-clipboard-list"></i><span class="ml-body"><span class="ml-title">全部评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-chart-bar"></i><span class="ml-body"><span class="ml-title">评分标准</span><span class="ml-desc">稳定性/性能/价格/风险</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+                <span class="mega-title">精选专线直达</span>
+                <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+                <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+                <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+                <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+                <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+              </div>
+            </div>
+          </div>
+
+          <a href="/coupons" class="nm">优惠码</a>
+
+          <div class="nav-item">
+
+            <a href="/guide" class="nm">指南<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门选购</span>
+
+                <a href="/guide"><i class="ti ti-book"></i>指南总览</a>
+
+                <a href="/airport-beginner-guide"><i class="ti ti-school"></i>新手入门</a>
+
+                <a href="/airport-comparison-guide"><i class="ti ti-scale"></i>横评选型</a>
+
+                <a href="/airport-plan-guide"><i class="ti ti-receipt"></i>套餐怎么选</a>
+
+                <a href="/multi-device-plan"><i class="ti ti-devices"></i>多设备方案</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">线路与协议</span>
+
+                <a href="/airport-line-types"><i class="ti ti-route"></i>线路类型详解</a>
+
+                <a href="/what-is-iplc"><i class="ti ti-server-2"></i>IPLC 专线</a>
+
+                <a href="/what-is-iepl"><i class="ti ti-server"></i>IEPL 专线</a>
+
+                <a href="/protocol-comparison"><i class="ti ti-git-compare"></i>代理协议对比</a>
+
+                <a href="/what-is-node"><i class="ti ti-help-circle"></i>节点是什么</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">使用与优化</span>
+
+                <a href="/node-region-guide"><i class="ti ti-world"></i>节点地区选择</a>
+
+                <a href="/node-multiplier-guide"><i class="ti ti-chart-bar"></i>节点倍率</a>
+
+                <a href="/node-utility-guide"><i class="ti ti-plug"></i>节点通用性</a>
+
+                <a href="/speed-metrics-guide"><i class="ti ti-gauge"></i>测速指标解读</a>
+
+                <a href="/dns-config-guide"><i class="ti ti-server"></i>DNS 设置</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">避坑与安全</span>
+
+                <a href="/airport-scam-prevention"><i class="ti ti-alert-triangle"></i>跑路识别</a>
+
+                <a href="/airport-support-guide"><i class="ti ti-headset"></i>售后与工单</a>
+
+                <a href="/subscription-security-guide"><i class="ti ti-shield-lock"></i>订阅安全</a>
+
+                <a href="/coupon-tips"><i class="ti ti-ticket"></i>优惠码避坑</a>
+
+                <a href="/airport-account-guide"><i class="ti ti-user-cog"></i>账号与订阅管理</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/tutorial" class="nm">教程<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门基础</span>
+
+                <a href="/tutorial#start"><i class="ti ti-books"></i>新手推荐路径</a>
+
+                <a href="/tutorial-airport-vs-vpn"><i class="ti ti-arrows-exchange"></i>机场与 VPN 的区别</a>
+
+                <a href="/tutorial-airport-faq"><i class="ti ti-help-circle"></i>新手常见问题</a>
+
+                <a href="/tutorial-client-update-broken"><i class="ti ti-refresh-alert"></i>客户端更新后失效</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">客户端配置</span>
+
+                <a href="/tutorial-clash-verge-rev"><i class="ti ti-brand-windows"></i>Clash Verge Rev</a>
+
+                <a href="/tutorial-v2rayn"><i class="ti ti-brand-windows"></i>v2rayN（Windows）</a>
+
+                <a href="/tutorial-shadowrocket"><i class="ti ti-brand-apple"></i>Shadowrocket（iOS）</a>
+
+                <a href="/tutorial-clash-android"><i class="ti ti-brand-android"></i>Clash for Android</a>
+
+                <a href="/tutorial-sing-box"><i class="ti ti-device-mobile"></i>Sing-Box 全平台</a>
+
+                <a href="/tutorial" class="mega-more"><i class="ti ti-dots"></i>全部客户端 →</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">订阅与测速</span>
+
+                <a href="/tutorial-subscription-url"><i class="ti ti-link"></i>订阅链接导入</a>
+
+                <a href="/tutorial-subscription-format"><i class="ti ti-file-code"></i>订阅格式详解</a>
+
+                <a href="/tutorial-subscription-converter"><i class="ti ti-arrows-exchange"></i>订阅转换工具</a>
+
+                <a href="/tutorial-test-speed"><i class="ti ti-gauge"></i>节点测速方法</a>
+
+                <a href="/tutorial-batch-speed-test"><i class="ti ti-bolt"></i>批量测速优选</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">故障排查</span>
+
+                <a href="/tutorial-node-connection-failed"><i class="ti ti-plug-off"></i>节点连接失败</a>
+
+                <a href="/tutorial-subscription-update-failed"><i class="ti ti-refresh"></i>订阅更新失败</a>
+
+                <a href="/tutorial-slow-at-night"><i class="ti ti-clock"></i>晚高峰变慢</a>
+
+                <a href="/tutorial-chatgpt-access"><i class="ti ti-robot"></i>ChatGPT 打不开</a>
+
+                <a href="/free-node"><i class="ti ti-gift"></i>免费节点</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <a href="/download" class="nm">下载</a>
+
+          <div class="nav-item">
+
+            <a href="/tools" class="nm">工具<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">本地可用</span>
+
+                <a href="/base64" class="mega-link"><i class="ti ti-code"></i><span class="ml-body"><span class="ml-title">Base64 编解码</span><span class="ml-desc">纯前端，内容不上传</span></span></a>
+
+                <a href="/tools" class="mega-link"><i class="ti ti-tools"></i><span class="ml-body"><span class="ml-title">全部工具</span><span class="ml-desc">6 个工具入口</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">检测与转换 · 需第三方</span>
+
+                <a href="/ping" class="mega-link"><i class="ti ti-activity"></i><span class="ml-body"><span class="ml-title">连通性测试</span><span class="ml-desc">静态版转 ping.pe</span></span></a>
+
+                <a href="/ip" class="mega-link"><i class="ti ti-world"></i><span class="ml-body"><span class="ml-title">IP 查询</span><span class="ml-desc">静态版转 ip.sb</span></span></a>
+
+                <a href="/dns" class="mega-link"><i class="ti ti-server"></i><span class="ml-body"><span class="ml-title">DNS 检测</span><span class="ml-desc">静态版转 dnschecker</span></span></a>
+
+                <a href="/convert" class="mega-link"><i class="ti ti-arrows-exchange"></i><span class="ml-body"><span class="ml-title">订阅转换</span><span class="ml-desc">建议用本地客户端</span></span></a>
+
+                <a href="/unlock" class="mega-link"><i class="ti ti-device-tv"></i><span class="ml-body"><span class="ml-title">解锁检测</span><span class="ml-desc">需服务端发起请求</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </nav>
+
+        <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+
+      </div>
+
+    </header><main class="wrap">
+
+      <div class="detail-layout">
+
+        <article class="detail-main">
+
+          <nav class="breadcrumb"><a href="/">首页</a> / <a href="/tutorial">使用教程</a></nav>
+
+          <h1>Surge 使用教程：macOS/iOS 旗舰客户端配置与分流</h1>
+
+          <div class="post-content"><div class="prose">
+
+              <h2>Surge 是什么</h2>
+
+              <p><strong>直接回答：</strong>Surge 是 macOS 和 iOS 平台上最知名的付费代理客户端之一，由个人开发者维护，以「规则系统强大 + 高度可定制」著称，被很多进阶用户视为代理客户端的标杆。它支持导入机场订阅，也支持 Shadowsocks、VLESS、VMess、Trojan、TUIC、Hysteria2 等主流协议。</p>
+
+              <p>与开源免费的 Clash 系相比，Surge 是商业闭源软件，付费买断，但换来的是更精细的规则引擎、更稳定的更新和更强的脚本扩展能力。它更适合愿意付费、追求极致控制力的用户。</p>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>维度</th><th>Surge</th><th>Clash 系</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>平台</td><td>macOS / iOS</td><td>全平台</td></tr>
+
+                    <tr><td>授权</td><td>付费买断</td><td>多数免费开源</td></tr>
+
+                    <tr><td>规则系统</td><td>强，精细可控</td><td>强，规则集生态成熟</td></tr>
+
+                    <tr><td>脚本扩展</td><td>支持 JavaScript 模块</td><td>部分支持</td></tr>
+
+                    <tr><td>上手难度</td><td>中高</td><td>中</td></tr>
+
+                  </tbody></table></div>
+
+              <h2>下载与安装</h2>
+
+              <ul>
+
+                <li><strong>macOS</strong>：在 Mac App Store 搜索「Surge」购买安装，或通过开发者官网购买。</li>
+
+                <li><strong>iOS</strong>：在 App Store 搜索「Surge」购买安装。</li>
+
+              </ul>
+
+              <p>Surge 是一次性买断（不同版本价格不同），购买后即可长期使用。安装完成后首次打开，按提示完成初始化即可。</p>
+
+              <h2>导入机场订阅</h2>
+
+              <ol>
+
+                <li>登录机场官网，复制订阅链接。</li>
+
+                <li>打开 Surge，进入「配置」页面，点击「从 URL 下载配置」或「导入」。</li>
+
+                <li>粘贴机场订阅链接，Surge 会自动下载并解析节点。</li>
+
+                <li>导入成功后，在「策略组」中可以看到机场的节点列表。</li>
+
+              </ol>
+
+              <blockquote>提示：部分机场提供专门的 Surge 订阅格式，优先用 Surge 格式；如果只有通用订阅或 Clash 格式，Surge 也能导入，但可能需要手动调整部分策略组。</blockquote>
+
+              <h2>选择节点并连接</h2>
+
+              <p>Surge 的节点选择通过「策略组」完成。策略组是一组节点的集合，常见的有：</p>
+
+              <ul>
+
+                <li><strong>代理策略组</strong>：决定默认走哪个节点，可手动选择或设为自动测速。</li>
+
+                <li><strong>分流策略组</strong>：按规则把不同流量分配到不同节点（如流媒体走特定地区节点）。</li>
+
+              </ul>
+
+              <p>连接时，进入「首页」或「策略组」，选择一个节点，打开「系统代理」或「增强模式」开关即可。Surge 的「增强模式」类似 TUN，能接管不支持系统代理的应用。</p>
+
+              <h2>规则分流怎么配</h2>
+
+              <p>Surge 的规则系统是它的核心优势，配置思路如下：</p>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>规则类型</th><th>作用</th><th>示例</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>DIRECT</td><td>直连，不走代理</td><td>国内网站、App</td></tr>
+
+                    <tr><td>PROXY</td><td>走代理节点</td><td>国外网站</td></tr>
+
+                    <tr><td>REJECT</td><td>拒绝连接</td><td>广告、跟踪域名</td></tr>
+
+                    <tr><td>策略组</td><td>按规则分配</td><td>流媒体走指定地区</td></tr>
+
+                  </tbody></table></div>
+
+              <p>日常使用，机场提供的订阅通常已内置一套规则，导入即可用。进阶用户可以导入第三方规则集（如 GeoIP、GeoSite），或用 Surge 的 JavaScript 模块实现更复杂的分流和重写。</p>
+
+              <h2>Surge 版本与模块扩展</h2>
+
+              <p>Surge 分 Mac 和 iOS 两个版本，功能侧重点略有不同：Mac 版支持更完整的增强模式、脚本和网络调试，适合在电脑上深度使用；iOS 版面向移动场景，规则和分流同样强大。两个版本需分别购买。</p>
+
+              <p>Surge 的模块（Module）和脚本（Script）是它的进阶玩法：</p>
+
+              <ul>
+
+                <li><strong>模块</strong>：把一组规则打包成可复用的模块，一键开关，常用于广告拦截、去重定向等。</li>
+
+                <li><strong>脚本</strong>：用 JavaScript 实现请求改写、响应修改，比如自动签到、解锁检测等。</li>
+
+              </ul>
+
+              <p>对普通机场用户，模块和脚本不是必学的；导入机场订阅、选好节点、开增强模式，就已经能完成绝大多数日常需求。进阶玩法可以等熟悉基础后再慢慢探索。</p>
+
+              <h2>常见问题排查</h2>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>问题</th><th>可能原因</th><th>解决办法</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>订阅导入失败</td><td>链接过期或格式不兼容</td><td>重新复制链接，换 Surge 格式</td></tr>
+
+                    <tr><td>节点连不上</td><td>节点失效或协议不匹配</td><td>换节点或更新订阅</td></tr>
+
+                    <tr><td>连上但无法上网</td><td>规则或系统代理异常</td><td>检查策略组，重启 Surge</td></tr>
+
+                    <tr><td>部分应用不走代理</td><td>不支持系统代理</td><td>开启增强模式</td></tr>
+
+                    <tr><td>速度慢</td><td>节点拥堵或本地网络差</td><td>换低延迟节点，避开晚高峰</td></tr>
+
+                  </tbody></table></div>
+
+              <p>Surge 的上手门槛略高于 Clash，但一旦熟悉它的策略组和规则逻辑，就能实现非常精细的流量控制。对追求「每个流量走哪里都自己说了算」的用户，Surge 是值得付费的选择。</p>
+
+            </div></div>
+
+        </article>
+
+        <aside class="sidebar"><div class="sidebar-widget sidebar-widget-pick">
+<a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" rel="noopener nofollow sponsored" target="_blank">
+<span class="pick-label">本月主推专线推荐</span>
+<span class="pick-head">
+<span class="pick-avatar"><img alt="" height="36" src="/assets/img/logos/yinxingren.png" style="object-fit: contain; border-radius: 6px;" width="36"/></span>
+<span class="pick-name">隐形人</span>
+<span class="pick-stars" title="本站评分">★★★★★</span>
+</span>
+<span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+<span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+<span class="pick-foot">
+<span class="pick-price">¥7.27/月付 起</span>
+<span class="pick-btn">访问官网 →</span>
+</span>
+</a>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">优质专线直达</div>
+<ul class="sidebar-list">
+<li><a href="/yinxingren.html">#1 隐形人：全 IEPL 纯专线</a></li>
+<li><a href="/muguangjiasu.html">#2 暮光加速：IPLC 高速专线</a></li>
+<li><a href="/breezenet.html">#3 微风网络：优质 IPLC 专线</a></li>
+<li><a href="/feimaoyun.html">#4 飞猫云：原生双ISP专线</a></li>
+<li><a href="/feiv.html">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+<li><a href="/lingdongyun.html">#6 灵动云：BGP 智能多线冗余</a></li>
+<li><a href="/wavenet.html">#7 浪网 WaveNet：高速专线大带宽</a></li>
+<li><a href="/laddercloud.html">#8 梯子云：高速专线天梯随行</a></li>
+<li><a href="/quanqiuyun.html">#9 全球云：BGP+专线全球覆盖</a></li>
+<li><a href="/wuyoulianjie.html">#10 无忧链接：新VLESS+IPLC专线</a></li>
+</ul>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">热门标签</div>
+<ul class="sidebar-list">
+<li><a href="/tag-vless">VLESS</a></li>
+<li><a href="/tag-hk">香港</a></li>
+<li><a href="/tag-netflix">Netflix</a></li>
+<li><a href="/tag-chatgpt">ChatGPT</a></li>
+<li><a href="/tag-iplc">IPLC专线</a></li>
+</ul>
+</div></aside>
+
+      </div>
+
+    </main><footer class="site-footer">
+      <div class="container-xl">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand-col">
+            <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+            <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">VPN机场</div>
+            <a href="/">VPN机场推荐</a>
+            <a href="/rankings">VPN机场榜单</a>
+            <a href="/cheap-airports">便宜VPN机场</a>
+            <a href="/reviews">VPN机场评测</a>
+            <a href="/coupons">VPN机场优惠码</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">内容</div>
+            <a href="/tutorial">VPN机场教程</a>
+            <a href="/guide">VPN机场指南</a>
+            <a href="/knowledge">VPN机场知识</a>
+            <a href="/streaming">流媒体/AI</a>
+            <a href="/tags">标签导航</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">资源</div>
+            <a href="/download">客户端下载</a>
+			<a href="/free-vpn">免费VPN</a>
+			<a href="/free-node">机场节点</a>
+            <a href="/tools">在线工具</a>
+            <a href="/apple-id">共享ID</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">关于</div>
+            <a href="/about">关于我们</a>
+			<a href="/faq">常见问题</a>
+            <a href="/methodology">测评方法</a>
+            <a href="/disclaimer">免责声明</a>
+            <a href="/privacy">隐私政策</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+          <span>VS 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+        </div>
+      </div>
+    </footer>
+    <button class="to-top" id="backToTop" aria-label="返回顶部"><i class="ti ti-arrow-up"></i></button>
+    <script src="/assets/js/main.js"></script>
+<script defer src="//zztools.cc/stat/assets/js/tk.js" data-sid="8e6427d7bc551aea"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"11687e13bbaf45ecb062d6b8fcf1c940","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

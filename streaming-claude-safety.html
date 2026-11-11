@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude防封号实操：风控规则与账号申诉模板｜vpnjc.blog</title>
+<meta name="description" content="剖析Claude频繁封禁背后的出口IP关联与风控阈值，提出锁定独享或固定专线节点、绝不跨区秒切以及封号后标准申诉文案模板等干货保护动作。"/>
+<meta name="keywords" content="Claude防封号,Claude申诉指南,AI账号安全"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/streaming-claude-safety"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="Claude防封号实操：风控规则与账号申诉模板｜vpnjc.blog"/>
+<meta property="og:description" content="剖析Claude频繁封禁背后的出口IP关联与风控阈值，提出锁定独享或固定专线节点、绝不跨区秒切以及封号后标准申诉文案模板等干货保护动作。"/>
+<meta property="og:url" content="https://vpnjc.blog/streaming-claude-safety"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="nav">
+
+      <div class="container-xl">
+
+        <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+
+        <nav class="nav-menu" id="navMenu">
+
+          <a href="/" class="nm">首页</a>
+
+          <div class="nav-item">
+
+            <a href="/rankings" class="nm">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">榜单与评测</span>
+
+                <a href="/rankings" class="mega-link"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选专线按评分排序</span></span></a>
+
+                <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">VPN机场评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维加权怎么算</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">按需求筛选</span>
+
+                <a href="/cheap-airports" class="mega-link"><i class="ti ti-coin"></i><span class="ml-body"><span class="ml-title">便宜VPN机场</span><span class="ml-desc">起步价 15 元以内</span></span></a>
+
+                <a href="/traffic" class="mega-link"><i class="ti ti-database"></i><span class="ml-body"><span class="ml-title">按量VPN机场</span><span class="ml-desc">流量包不过期</span></span></a>
+
+                <a href="/tags" class="mega-link"><i class="ti ti-tags"></i><span class="ml-body"><span class="ml-title">标签导航</span><span class="ml-desc">28 个有效标签按协议/地区找</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/reviews" class="nm">评测<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">评测中心</span>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-clipboard-list"></i><span class="ml-body"><span class="ml-title">全部评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-chart-bar"></i><span class="ml-body"><span class="ml-title">评分标准</span><span class="ml-desc">稳定性/性能/价格/风险</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+                <span class="mega-title">精选专线直达</span>
+                <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+                <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+                <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+                <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+                <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+              </div>
+            </div>
+          </div>
+
+          <a href="/coupons" class="nm">优惠码</a>
+
+          <div class="nav-item">
+
+            <a href="/guide" class="nm">指南<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门选购</span>
+
+                <a href="/guide"><i class="ti ti-book"></i>指南总览</a>
+
+                <a href="/airport-beginner-guide"><i class="ti ti-school"></i>新手入门</a>
+
+                <a href="/airport-comparison-guide"><i class="ti ti-scale"></i>横评选型</a>
+
+                <a href="/airport-plan-guide"><i class="ti ti-receipt"></i>套餐怎么选</a>
+
+                <a href="/multi-device-plan"><i class="ti ti-devices"></i>多设备方案</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">线路与协议</span>
+
+                <a href="/airport-line-types"><i class="ti ti-route"></i>线路类型详解</a>
+
+                <a href="/what-is-iplc"><i class="ti ti-server-2"></i>IPLC 专线</a>
+
+                <a href="/what-is-iepl"><i class="ti ti-server"></i>IEPL 专线</a>
+
+                <a href="/protocol-comparison"><i class="ti ti-git-compare"></i>代理协议对比</a>
+
+                <a href="/what-is-node"><i class="ti ti-help-circle"></i>节点是什么</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">使用与优化</span>
+
+                <a href="/node-region-guide"><i class="ti ti-world"></i>节点地区选择</a>
+
+                <a href="/node-multiplier-guide"><i class="ti ti-chart-bar"></i>节点倍率</a>
+
+                <a href="/node-utility-guide"><i class="ti ti-plug"></i>节点通用性</a>
+
+                <a href="/speed-metrics-guide"><i class="ti ti-gauge"></i>测速指标解读</a>
+
+                <a href="/dns-config-guide"><i class="ti ti-server"></i>DNS 设置</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">避坑与安全</span>
+
+                <a href="/airport-scam-prevention"><i class="ti ti-alert-triangle"></i>跑路识别</a>
+
+                <a href="/airport-support-guide"><i class="ti ti-headset"></i>售后与工单</a>
+
+                <a href="/subscription-security-guide"><i class="ti ti-shield-lock"></i>订阅安全</a>
+
+                <a href="/coupon-tips"><i class="ti ti-ticket"></i>优惠码避坑</a>
+
+                <a href="/airport-account-guide"><i class="ti ti-user-cog"></i>账号与订阅管理</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/tutorial" class="nm">教程<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门基础</span>
+
+                <a href="/tutorial#start"><i class="ti ti-books"></i>新手推荐路径</a>
+
+                <a href="/tutorial-airport-vs-vpn"><i class="ti ti-arrows-exchange"></i>机场与 VPN 的区别</a>
+
+                <a href="/tutorial-airport-faq"><i class="ti ti-help-circle"></i>新手常见问题</a>
+
+                <a href="/tutorial-client-update-broken"><i class="ti ti-refresh-alert"></i>客户端更新后失效</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">客户端配置</span>
+
+                <a href="/tutorial-clash-verge-rev"><i class="ti ti-brand-windows"></i>Clash Verge Rev</a>
+
+                <a href="/tutorial-v2rayn"><i class="ti ti-brand-windows"></i>v2rayN（Windows）</a>
+
+                <a href="/tutorial-shadowrocket"><i class="ti ti-brand-apple"></i>Shadowrocket（iOS）</a>
+
+                <a href="/tutorial-clash-android"><i class="ti ti-brand-android"></i>Clash for Android</a>
+
+                <a href="/tutorial-sing-box"><i class="ti ti-device-mobile"></i>Sing-Box 全平台</a>
+
+                <a href="/tutorial" class="mega-more"><i class="ti ti-dots"></i>全部客户端 →</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">订阅与测速</span>
+
+                <a href="/tutorial-subscription-url"><i class="ti ti-link"></i>订阅链接导入</a>
+
+                <a href="/tutorial-subscription-format"><i class="ti ti-file-code"></i>订阅格式详解</a>
+
+                <a href="/tutorial-subscription-converter"><i class="ti ti-arrows-exchange"></i>订阅转换工具</a>
+
+                <a href="/tutorial-test-speed"><i class="ti ti-gauge"></i>节点测速方法</a>
+
+                <a href="/tutorial-batch-speed-test"><i class="ti ti-bolt"></i>批量测速优选</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">故障排查</span>
+
+                <a href="/tutorial-node-connection-failed"><i class="ti ti-plug-off"></i>节点连接失败</a>
+
+                <a href="/tutorial-subscription-update-failed"><i class="ti ti-refresh"></i>订阅更新失败</a>
+
+                <a href="/tutorial-slow-at-night"><i class="ti ti-clock"></i>晚高峰变慢</a>
+
+                <a href="/tutorial-chatgpt-access"><i class="ti ti-robot"></i>ChatGPT 打不开</a>
+
+                <a href="/free-node"><i class="ti ti-gift"></i>免费节点</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <a href="/download" class="nm">下载</a>
+
+          <div class="nav-item">
+
+            <a href="/tools" class="nm">工具<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">本地可用</span>
+
+                <a href="/base64" class="mega-link"><i class="ti ti-code"></i><span class="ml-body"><span class="ml-title">Base64 编解码</span><span class="ml-desc">纯前端，内容不上传</span></span></a>
+
+                <a href="/tools" class="mega-link"><i class="ti ti-tools"></i><span class="ml-body"><span class="ml-title">全部工具</span><span class="ml-desc">6 个工具入口</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">检测与转换 · 需第三方</span>
+
+                <a href="/ping" class="mega-link"><i class="ti ti-activity"></i><span class="ml-body"><span class="ml-title">连通性测试</span><span class="ml-desc">静态版转 ping.pe</span></span></a>
+
+                <a href="/ip" class="mega-link"><i class="ti ti-world"></i><span class="ml-body"><span class="ml-title">IP 查询</span><span class="ml-desc">静态版转 ip.sb</span></span></a>
+
+                <a href="/dns" class="mega-link"><i class="ti ti-server"></i><span class="ml-body"><span class="ml-title">DNS 检测</span><span class="ml-desc">静态版转 dnschecker</span></span></a>
+
+                <a href="/convert" class="mega-link"><i class="ti ti-arrows-exchange"></i><span class="ml-body"><span class="ml-title">订阅转换</span><span class="ml-desc">建议用本地客户端</span></span></a>
+
+                <a href="/unlock" class="mega-link"><i class="ti ti-device-tv"></i><span class="ml-body"><span class="ml-title">解锁检测</span><span class="ml-desc">需服务端发起请求</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </nav>
+
+        <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+
+      </div>
+
+    </header><main class="wrap">
+
+      <div class="detail-layout">
+
+        <article class="detail-main">
+
+          <nav class="breadcrumb"><a href="/">首页</a> / <a href="/streaming">流媒体/AI解锁</a></nav>
+
+          <h1>Claude 防封号指南：账号安全与申诉实操</h1>
+
+          <div class="post-content"><div class="prose">
+
+              <h2>Claude 封号潮：一组触目惊心的数据</h2>
+
+              <p>近期 Claude 封号话题在 AI 圈引发热议。据 Anthropic 发布的《安全与信任报告》，2026 年上半年 Claude 累计封禁约 1140 万个账号，平均每月近 190 万、每天超 6 万。同期收到约 39.8 万次申诉，最终仅 4.2 万次成功，申诉成功率约 10.5%。更值得注意的是，上一统计期（2025 下半年）封禁量约 145 万，半年间暴增近 8 倍。</p>
+
+              <p>对依赖 Claude 的机场用户来说，这不是遥不可及的新闻——账号一旦被封，工作流可能「一夜归零」。本文讲清封号原因与防封要点。</p>
+
+              <h2>为什么会被封号</h2>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>原因</th><th>说明</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>违反地区使用限制</td><td>从不被支持的地区访问，是最常见的原因之一</td></tr>
+
+                    <tr><td>违法或侵权内容</td><td>利用服务从事违法活动、侵犯隐私</td></tr>
+
+                    <tr><td>极端违规内容</td><td>涉及极端自残等敏感指令，可能「触发即封」</td></tr>
+
+                    <tr><td>黑产/批量账号</td><td>批量注册、异常使用的账号</td></tr>
+
+                  </tbody></table></div>
+
+              <p>Anthropic 已上线自研机器学习分类器作为风控核心，对极端违规采取「触发即永久封禁」，不给二次警告。此外，新版使用政策将于 11 月 12 日生效，明确禁止「持续且无必要的辱骂或残酷行为」。</p>
+
+              <h2>封号前的预警信号</h2>
+
+              <p>账号被封前，通常会有一些信号：</p>
+
+              <ul>
+
+                <li><strong>频繁要求验证</strong>：突然频繁弹出验证码、人机验证，可能是风控在观察。</li>
+
+                <li><strong>响应变慢或功能受限</strong>：部分功能被限制、响应明显变慢。</li>
+
+                <li><strong>提示地区异常</strong>：访问时提示「当前地区不可用」，说明 IP 被识别。</li>
+
+                <li><strong>邮件警告</strong>：收到平台的政策提醒邮件，要及时重视。</li>
+
+              </ul>
+
+              <p>出现这些信号时，及时调整使用环境（换干净节点、减少换区），能降低被封的概率。</p>
+
+              <h2>防封号的五个要点</h2>
+
+              <ol>
+
+                <li><strong>IP 要干净</strong>：优先用家宽/原生 IP 节点，机房 IP 是重灾区。</li>
+
+                <li><strong>地区要一致</strong>：注册、登录、使用尽量保持同一地区，频繁换区是风控高危行为。</li>
+
+                <li><strong>内容要合规</strong>：不碰违法、侵权、极端敏感内容，正常提问不受影响。</li>
+
+                <li><strong>别批量注册</strong>：同一环境注册多个账号、异常频繁操作，容易被判定为黑产。</li>
+
+                <li><strong>别共用账号</strong>：多人共用、异地频繁登录，会增加风控概率。</li>
+
+              </ol>
+
+              <blockquote>提醒：正常表达不满、反驳观点、创作黑暗题材内容，以及模型测试研究，不在禁止之列。真正高危的是「极端违规内容」和「地区/IP 异常」。</blockquote>
+
+              <h2>哪些行为最危险</h2>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>行为</th><th>风险等级</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>从受限地区频繁访问</td><td>极高</td></tr>
+
+                    <tr><td>批量注册/多账号同环境操作</td><td>极高</td></tr>
+
+                    <tr><td>触碰极端违规内容</td><td>极高（可能直接永久封）</td></tr>
+
+                    <tr><td>频繁切换节点/地区</td><td>高</td></tr>
+
+                    <tr><td>多人共用同一账号</td><td>中高</td></tr>
+
+                  </tbody></table></div>
+
+              <p>对照这张表自查，把「极高」和「高」的行为改掉，封号风险会明显下降。</p>
+
+              <h2>被封后怎么申诉</h2>
+
+              <p>如果不幸被封，可以尝试申诉，但要有心理准备（成功率约 10%）：</p>
+
+              <ul>
+
+                <li><strong>走官方申诉渠道</strong>：按封禁提示提交申诉，说明使用场景。</li>
+
+                <li><strong>材料要真实</strong>：附上真实的使用说明（如工作用途、研究需求），别编造。</li>
+
+                <li><strong>态度要诚恳</strong>：承认可能的问题，说明会遵守政策。</li>
+
+                <li><strong>别重复刷申诉</strong>：频繁提交反而可能被判定为异常。</li>
+
+              </ul>
+
+              <h2>多账号与备份策略</h2>
+
+              <p>面对高封号率，很多重度用户采取「多账号 + 备份」策略：</p>
+
+              <ul>
+
+                <li><strong>主号 + 备用号</strong>：主号用于核心工作，备用号做应急。</li>
+
+                <li><strong>账号环境隔离</strong>：不同账号用不同节点/环境，避免连带封禁。</li>
+
+                <li><strong>重要内容本地备份</strong>：对话记录、生成内容及时导出，避免账号丢失导致资产归零。</li>
+
+                <li><strong>多平台兜底</strong>：Claude 之外准备 ChatGPT 等替代方案，降低单点依赖。</li>
+
+              </ul>
+
+              <h2>常见问题</h2>
+
+              <div class="table-wrap"><table>
+
+                  <thead><tr><th>问题</th><th>解答</th></tr></thead>
+
+                  <tbody>
+
+                    <tr><td>正常用会被封吗？</td><td>正常使用风险低，但 IP 异常仍可能触发。</td></tr>
+
+                    <tr><td>申诉有用吗？</td><td>成功率约 10%，值得一试但别抱太高期望。</td></tr>
+
+                    <tr><td>换号能绕过吗？</td><td>换号借号同样违规，且可能连带封禁。</td></tr>
+
+                    <tr><td>怎么降低风险？</td><td>干净 IP、地区一致、内容合规、别批量操作。</td></tr>
+
+                  </tbody></table></div>
+
+              <p>Claude 封号潮的本质，是平台风控在收紧。对机场用户来说，能做的就是「选干净节点、保持环境稳定、内容合规、做好备份」。把这几件事做到位，就能把封号风险降到最低。记住：账号是资产，别把重要工作流只押在一个账号上，多做一手准备，才能应对随时可能到来的风控变化。把风险想在前头，才能在 AI 时代从容使用工具。</p>
+
+            </div></div>
+
+        </article>
+
+        <aside class="sidebar"><div class="sidebar-widget sidebar-widget-pick">
+<a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" rel="noopener nofollow sponsored" target="_blank">
+<span class="pick-label">本月主推专线推荐</span>
+<span class="pick-head">
+<span class="pick-avatar"><img alt="" height="36" src="/assets/img/logos/yinxingren.png" style="object-fit: contain; border-radius: 6px;" width="36"/></span>
+<span class="pick-name">隐形人</span>
+<span class="pick-stars" title="本站评分">★★★★★</span>
+</span>
+<span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+<span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+<span class="pick-foot">
+<span class="pick-price">¥7.27/月付 起</span>
+<span class="pick-btn">访问官网 →</span>
+</span>
+</a>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">优质专线直达</div>
+<ul class="sidebar-list">
+<li><a href="/yinxingren.html">#1 隐形人：全 IEPL 纯专线</a></li>
+<li><a href="/muguangjiasu.html">#2 暮光加速：IPLC 高速专线</a></li>
+<li><a href="/breezenet.html">#3 微风网络：优质 IPLC 专线</a></li>
+<li><a href="/feimaoyun.html">#4 飞猫云：原生双ISP专线</a></li>
+<li><a href="/feiv.html">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+<li><a href="/lingdongyun.html">#6 灵动云：BGP 智能多线冗余</a></li>
+<li><a href="/wavenet.html">#7 浪网 WaveNet：高速专线大带宽</a></li>
+<li><a href="/laddercloud.html">#8 梯子云：高速专线天梯随行</a></li>
+<li><a href="/quanqiuyun.html">#9 全球云：BGP+专线全球覆盖</a></li>
+<li><a href="/wuyoulianjie.html">#10 无忧链接：新VLESS+IPLC专线</a></li>
+</ul>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">热门标签</div>
+<ul class="sidebar-list">
+<li><a href="/tag-vless">VLESS</a></li>
+<li><a href="/tag-hk">香港</a></li>
+<li><a href="/tag-netflix">Netflix</a></li>
+<li><a href="/tag-chatgpt">ChatGPT</a></li>
+<li><a href="/tag-iplc">IPLC专线</a></li>
+</ul>
+</div></aside>
+
+      </div>
+
+    </main><footer class="site-footer">
+      <div class="container-xl">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand-col">
+            <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+            <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">VPN机场</div>
+            <a href="/">VPN机场推荐</a>
+            <a href="/rankings">VPN机场榜单</a>
+            <a href="/cheap-airports">便宜VPN机场</a>
+            <a href="/reviews">VPN机场评测</a>
+            <a href="/coupons">VPN机场优惠码</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">内容</div>
+            <a href="/tutorial">VPN机场教程</a>
+            <a href="/guide">VPN机场指南</a>
+            <a href="/knowledge">VPN机场知识</a>
+            <a href="/streaming">流媒体/AI</a>
+            <a href="/tags">标签导航</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">资源</div>
+            <a href="/download">客户端下载</a>
+			<a href="/free-vpn">免费VPN</a>
+			<a href="/free-node">机场节点</a>
+            <a href="/tools">在线工具</a>
+            <a href="/apple-id">共享ID</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">关于</div>
+            <a href="/about">关于我们</a>
+			<a href="/faq">常见问题</a>
+            <a href="/methodology">测评方法</a>
+            <a href="/disclaimer">免责声明</a>
+            <a href="/privacy">隐私政策</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+          <span>VS 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+        </div>
+      </div>
+    </footer>
+    <button class="to-top" id="backToTop" aria-label="返回顶部"><i class="ti ti-arrow-up"></i></button>
+    <script src="/assets/js/main.js"></script>
+<script defer src="//zztools.cc/stat/assets/js/tk.js" data-sid="8e6427d7bc551aea"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"11687e13bbaf45ecb062d6b8fcf1c940","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

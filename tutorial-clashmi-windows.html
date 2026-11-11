@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClashMi Windows绿色版：解压运行与放行教程｜vpnjc.blog</title>
+<meta name="description" content="演示如何在办公或受限Windows电脑上运行免安装绿色版ClashMi，教你看懂并放行Windows SmartScreen安全警告，零系统残留快速接入机场订阅。"/>
+<meta name="keywords" content="ClashMi Windows绿色版,免安装代理客户端,办公室翻墙教程"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://vpnjc.blog/tutorial-clashmi-windows"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="vpnjc.blog"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:title" content="ClashMi Windows绿色版：解压运行与放行教程｜vpnjc.blog"/>
+<meta property="og:description" content="演示如何在办公或受限Windows电脑上运行免安装绿色版ClashMi，教你看懂并放行Windows SmartScreen安全警告，零系统残留快速接入机场订阅。"/>
+<meta property="og:url" content="https://vpnjc.blog/tutorial-clashmi-windows"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="nav">
+
+      <div class="container-xl">
+
+        <a href="/" class="nav-logo"><img src="/assets/img/logo-mark.png?v=3" alt="" width="26" height="26" class="nav-logo-mark">VPN选择与机场推荐</a>
+
+        <nav class="nav-menu" id="navMenu">
+
+          <a href="/" class="nm">首页</a>
+
+          <div class="nav-item">
+
+            <a href="/rankings" class="nm">榜单<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">榜单与评测</span>
+
+                <a href="/rankings" class="mega-link"><i class="ti ti-list"></i><span class="ml-body"><span class="ml-title">全量榜单</span><span class="ml-desc">10 家精选专线按评分排序</span></span></a>
+
+                <a href="/compare" class="mega-link"><i class="ti ti-table"></i><span class="ml-body"><span class="ml-title">横向对比</span><span class="ml-desc">10 家一表比价 / 每G成本</span></span></a>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-star"></i><span class="ml-body"><span class="ml-title">VPN机场评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-ruler-measure"></i><span class="ml-body"><span class="ml-title">测评方法</span><span class="ml-desc">四维加权怎么算</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">按需求筛选</span>
+
+                <a href="/cheap-airports" class="mega-link"><i class="ti ti-coin"></i><span class="ml-body"><span class="ml-title">便宜VPN机场</span><span class="ml-desc">起步价 15 元以内</span></span></a>
+
+                <a href="/traffic" class="mega-link"><i class="ti ti-database"></i><span class="ml-body"><span class="ml-title">按量VPN机场</span><span class="ml-desc">流量包不过期</span></span></a>
+
+                <a href="/tags" class="mega-link"><i class="ti ti-tags"></i><span class="ml-body"><span class="ml-title">标签导航</span><span class="ml-desc">28 个有效标签按协议/地区找</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/reviews" class="nm">评测<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">评测中心</span>
+
+                <a href="/reviews" class="mega-link"><i class="ti ti-clipboard-list"></i><span class="ml-body"><span class="ml-title">全部评测</span><span class="ml-desc">10 篇独立实测</span></span></a>
+
+                <a href="/methodology" class="mega-link"><i class="ti ti-chart-bar"></i><span class="ml-body"><span class="ml-title">评分标准</span><span class="ml-desc">稳定性/性能/价格/风险</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+                <span class="mega-title">精选专线直达</span>
+                <a href="/yinxingren.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/yinxingren.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">隐形人</span><span class="ml-desc">纯 IEPL 高速专线</span></span></a>
+                <a href="/muguangjiasu.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/muguangjiasu.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">暮光加速</span><span class="ml-desc">大机房专线直连</span></span></a>
+                <a href="/breezenet.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/breezenet.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">微风网络</span><span class="ml-desc">乘风月付与清风年付</span></span></a>
+                <a href="/feimaoyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/feimaoyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">飞猫云</span><span class="ml-desc">学生折低至7元/月</span></span></a>
+                <a href="/lingdongyun.html" class="mega-link"><img class="mega-logo" src="/assets/img/logos/lingdongyun.png" alt="" width="18" height="18" style="object-fit:contain;"><span class="ml-body"><span class="ml-title">灵动云</span><span class="ml-desc">BGP 智能调度专线</span></span></a>
+              </div>
+            </div>
+          </div>
+
+          <a href="/coupons" class="nm">优惠码</a>
+
+          <div class="nav-item">
+
+            <a href="/guide" class="nm">指南<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门选购</span>
+
+                <a href="/guide"><i class="ti ti-book"></i>指南总览</a>
+
+                <a href="/airport-beginner-guide"><i class="ti ti-school"></i>新手入门</a>
+
+                <a href="/airport-comparison-guide"><i class="ti ti-scale"></i>横评选型</a>
+
+                <a href="/airport-plan-guide"><i class="ti ti-receipt"></i>套餐怎么选</a>
+
+                <a href="/multi-device-plan"><i class="ti ti-devices"></i>多设备方案</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">线路与协议</span>
+
+                <a href="/airport-line-types"><i class="ti ti-route"></i>线路类型详解</a>
+
+                <a href="/what-is-iplc"><i class="ti ti-server-2"></i>IPLC 专线</a>
+
+                <a href="/what-is-iepl"><i class="ti ti-server"></i>IEPL 专线</a>
+
+                <a href="/protocol-comparison"><i class="ti ti-git-compare"></i>代理协议对比</a>
+
+                <a href="/what-is-node"><i class="ti ti-help-circle"></i>节点是什么</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">使用与优化</span>
+
+                <a href="/node-region-guide"><i class="ti ti-world"></i>节点地区选择</a>
+
+                <a href="/node-multiplier-guide"><i class="ti ti-chart-bar"></i>节点倍率</a>
+
+                <a href="/node-utility-guide"><i class="ti ti-plug"></i>节点通用性</a>
+
+                <a href="/speed-metrics-guide"><i class="ti ti-gauge"></i>测速指标解读</a>
+
+                <a href="/dns-config-guide"><i class="ti ti-server"></i>DNS 设置</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">避坑与安全</span>
+
+                <a href="/airport-scam-prevention"><i class="ti ti-alert-triangle"></i>跑路识别</a>
+
+                <a href="/airport-support-guide"><i class="ti ti-headset"></i>售后与工单</a>
+
+                <a href="/subscription-security-guide"><i class="ti ti-shield-lock"></i>订阅安全</a>
+
+                <a href="/coupon-tips"><i class="ti ti-ticket"></i>优惠码避坑</a>
+
+                <a href="/airport-account-guide"><i class="ti ti-user-cog"></i>账号与订阅管理</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="nav-item">
+
+            <a href="/tutorial" class="nm">教程<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-mega">
+
+              <div class="mega-col">
+
+                <span class="mega-title">入门基础</span>
+
+                <a href="/tutorial#start"><i class="ti ti-books"></i>新手推荐路径</a>
+
+                <a href="/tutorial-airport-vs-vpn"><i class="ti ti-arrows-exchange"></i>机场与 VPN 的区别</a>
+
+                <a href="/tutorial-airport-faq"><i class="ti ti-help-circle"></i>新手常见问题</a>
+
+                <a href="/tutorial-client-update-broken"><i class="ti ti-refresh-alert"></i>客户端更新后失效</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">客户端配置</span>
+
+                <a href="/tutorial-clash-verge-rev"><i class="ti ti-brand-windows"></i>Clash Verge Rev</a>
+
+                <a href="/tutorial-v2rayn"><i class="ti ti-brand-windows"></i>v2rayN（Windows）</a>
+
+                <a href="/tutorial-shadowrocket"><i class="ti ti-brand-apple"></i>Shadowrocket（iOS）</a>
+
+                <a href="/tutorial-clash-android"><i class="ti ti-brand-android"></i>Clash for Android</a>
+
+                <a href="/tutorial-sing-box"><i class="ti ti-device-mobile"></i>Sing-Box 全平台</a>
+
+                <a href="/tutorial" class="mega-more"><i class="ti ti-dots"></i>全部客户端 →</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">订阅与测速</span>
+
+                <a href="/tutorial-subscription-url"><i class="ti ti-link"></i>订阅链接导入</a>
+
+                <a href="/tutorial-subscription-format"><i class="ti ti-file-code"></i>订阅格式详解</a>
+
+                <a href="/tutorial-subscription-converter"><i class="ti ti-arrows-exchange"></i>订阅转换工具</a>
+
+                <a href="/tutorial-test-speed"><i class="ti ti-gauge"></i>节点测速方法</a>
+
+                <a href="/tutorial-batch-speed-test"><i class="ti ti-bolt"></i>批量测速优选</a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">故障排查</span>
+
+                <a href="/tutorial-node-connection-failed"><i class="ti ti-plug-off"></i>节点连接失败</a>
+
+                <a href="/tutorial-subscription-update-failed"><i class="ti ti-refresh"></i>订阅更新失败</a>
+
+                <a href="/tutorial-slow-at-night"><i class="ti ti-clock"></i>晚高峰变慢</a>
+
+                <a href="/tutorial-chatgpt-access"><i class="ti ti-robot"></i>ChatGPT 打不开</a>
+
+                <a href="/free-node"><i class="ti ti-gift"></i>免费节点</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <a href="/download" class="nm">下载</a>
+
+          <div class="nav-item">
+
+            <a href="/tools" class="nm">工具<i class="ti ti-chevron-down nav-caret"></i></a>
+
+            <div class="nav-sub nav-wide">
+
+              <div class="mega-col">
+
+                <span class="mega-title">本地可用</span>
+
+                <a href="/base64" class="mega-link"><i class="ti ti-code"></i><span class="ml-body"><span class="ml-title">Base64 编解码</span><span class="ml-desc">纯前端，内容不上传</span></span></a>
+
+                <a href="/tools" class="mega-link"><i class="ti ti-tools"></i><span class="ml-body"><span class="ml-title">全部工具</span><span class="ml-desc">6 个工具入口</span></span></a>
+
+              </div>
+
+              <div class="mega-col">
+
+                <span class="mega-title">检测与转换 · 需第三方</span>
+
+                <a href="/ping" class="mega-link"><i class="ti ti-activity"></i><span class="ml-body"><span class="ml-title">连通性测试</span><span class="ml-desc">静态版转 ping.pe</span></span></a>
+
+                <a href="/ip" class="mega-link"><i class="ti ti-world"></i><span class="ml-body"><span class="ml-title">IP 查询</span><span class="ml-desc">静态版转 ip.sb</span></span></a>
+
+                <a href="/dns" class="mega-link"><i class="ti ti-server"></i><span class="ml-body"><span class="ml-title">DNS 检测</span><span class="ml-desc">静态版转 dnschecker</span></span></a>
+
+                <a href="/convert" class="mega-link"><i class="ti ti-arrows-exchange"></i><span class="ml-body"><span class="ml-title">订阅转换</span><span class="ml-desc">建议用本地客户端</span></span></a>
+
+                <a href="/unlock" class="mega-link"><i class="ti ti-device-tv"></i><span class="ml-body"><span class="ml-title">解锁检测</span><span class="ml-desc">需服务端发起请求</span></span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </nav>
+
+        <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+
+      </div>
+
+    </header><main class="wrap">
+
+      <div class="detail-layout">
+
+        <article class="detail-main">
+
+          <nav class="breadcrumb"><a href="/">首页</a> / <a href="/tutorial">使用教程</a></nav>
+
+          <h1>ClashMi Windows 绿色版使用与订阅导入</h1>
+
+          <div class="post-content"><div class="container">
+
+              <p>ClashMi 除了 iOS 版，还有 Windows 绿色版。所谓绿色版就是不用安装，下载一个 zip 压缩包，解压后直接运行 exe 就能使用。这对于不方便安装软件的公司电脑、或不想在系统里留安装记录的用户来说很方便。本文演示从下载、解压、处理 SmartScreen 拦截、导入订阅到开启连接的完整流程。</p>
+
+              <div class="callout callout-editor">
+
+                <span class="callout-title">测试环境</span>Windows 10 22H2（64 位），ClashMi Windows 版本 1.3.0（2026-05 更新），测试使用无忧链接订阅链接。解压工具为 7-Zip。
+
+
+
+              </div>
+
+              <h2>第一步：下载与解压</h2>
+
+              <p>ClashMi Windows 版不在 Microsoft Store 上架，需要从 GitHub Releases 页面下载。访问 ClashMi 的 GitHub 仓库 → Releases → 找到最新版本 → 下载 <code>ClashMi-windows-x64.zip</code>（约 15MB）。</p>
+
+              <p>下载后，右键点击 zip 文件 → 「解压到 ClashMi-windows-x64\」。解压后的文件夹里只有一个 <code>ClashMi.exe</code> 和一个 <code>resources</code> 文件夹。不需要任何安装步骤。</p>
+
+              <blockquote>建议将解压后的文件夹放在固定位置（如 <code>D:\Tools\ClashMi\</code>），不要放在桌面或 Downloads 文件夹里，否则清理时容易误删。可以创建一个快捷方式到桌面方便打开。</blockquote>
+
+              <h2>第二步：处理 SmartScreen 拦截</h2>
+
+              <p>双击 <code>ClashMi.exe</code> 运行时，Windows 可能弹出 SmartScreen 拦截页面，提示「Windows 已保护你的电脑」。这是因为 ClashMi 没有购买代码签名证书（开源软件通常不会买）。</p>
+
+              <p>处理方法：在 SmartScreen 弹窗中点击「更多信息」→ 此时会出现「仍要运行」按钮 → 点击即可继续运行。这个操作不会影响系统安全，ClashMi 是开源软件，代码可以在 GitHub 上审查。</p>
+
+              <blockquote>如果 Windows Defender 直接删除了文件，需要在「Windows 安全中心 → 病毒和威胁防护 → 保护历史记录」中找到被隔离的 ClashMi.exe，选择「还原」或「允许在设备上运行」。然后在文件夹中重新运行。</blockquote>
+
+              <p>首次运行时，ClashMi 可能会请求管理员权限（UAC 弹窗），点击「是」。管理员权限是为了设置系统代理和 Tun 模式所需，不影响系统安全。</p>
+
+              <h2>第三步：添加机场订阅链接</h2>
+
+              <p>ClashMi Windows 版的界面与 iOS 版类似，左侧有三个标签：「配置」「代理」「设置」。点击「配置」标签 → 右上角「+」按钮 → 选择「从 URL 导入」。</p>
+
+              <p>在输入框中粘贴你的机场订阅链接（Clash 格式），点击「下载」。ClashMi 会自动下载配置文件并解析。成功后配置页面会出现一条配置项，显示节点数量和更新时间。</p>
+
+              <p>你也可以选择「从文件导入」，如果你有本地 Clash 配置文件（.yaml）的话。但对于机场用户来说，URL 导入是最方便的方式——节点更新时只需要点击「更新」按钮就能自动同步。</p>
+
+              <blockquote>订阅链接在机场官网的「用户中心」或「我的订阅」页面可以找到。格式类似 <code>https://example.com/api/v1/client/subscribe?token=xxxxx</code>。注意不要把链接分享给别人，否则别人可以使用你的流量。</blockquote>
+
+              <h2>第四步：选择节点与开启连接</h2>
+
+              <p>切换到「代理」标签页，可以看到按地区分组的节点列表。点击任意节点选中它（推荐先选香港节点）。然后点击主界面顶部的大开关按钮开启连接。</p>
+
+              <p>开启连接后，ClashMi 会设置系统代理（HTTP 代理模式），所有支持系统代理的应用（浏览器、微信等）都会走代理。状态栏不会显示 VPN 图标（因为不是 VPN 模式），但你可以打开浏览器访问 <code>google.com</code> 验证连接是否正常。</p>
+
+              <p>如果需要全局代理（包括不遵守系统代理的应用），可以在「设置」中开启「Tun 模式」。Tun 模式需要管理员权限，开启后所有流量都会走 ClashMi。但 Tun 模式可能影响某些本地服务（如局域网文件共享），按需使用。</p>
+
+              <h2>常见问题</h2>
+
+              <h3>Q：ClashMi Windows 版和 Clash Verge 有什么区别？</h3>
+
+              <p>ClashMi 更轻量，界面更简洁，适合新手。Clash Verge 功能更丰富，支持更多高级设置（如自定义规则、Profile 切换、日志查看）。如果你只是简单使用机场订阅，ClashMi 足够了；如果你需要精细控制，推荐 <a href="/tutorial-clash-verge-rev">Clash Verge</a>。</p>
+
+              <h3>Q：为什么运行后没有网络？</h3>
+
+              <p>检查以下几点：①节点是否选中了（代理页面应该高亮显示一个节点）；②订阅链接是否下载成功（配置页面应该显示节点数量大于 0）；③是否被防火墙拦截（临时关闭防火墙试试）；④如果开了 Tun 模式但没权限，试试以管理员身份运行 ClashMi.exe。</p>
+
+              <h3>Q：如何开机自启？</h3>
+
+              <p>在「设置」页面可以开启「开机自启动」选项。ClashMi 会在 Windows 注册表中添加自启动项。如果你用绿色版担心被清理，也可以手动在任务管理器 → 启动选项卡中添加快捷方式。</p>
+
+              <h3>Q：支持 Windows 7 吗？</h3>
+
+              <p>不支持。ClashMi Windows 版需要 Windows 10 1809 或更高版本，因为依赖新版 Windows 的网络 API。Windows 7 用户建议使用 v2rayN 或 Clash for Windows。</p>
+
+              <h3>Q：杀毒软件报毒怎么办？</h3>
+
+              <p>这是开源软件的常见问题——没有购买代码签名证书，杀毒软件会启发式扫描报毒。你可以在杀毒软件中将 ClashMi.exe 添加到白名单/信任列表。如果你对安全性有疑虑，可以自行从 GitHub 源码编译。</p>
+
+            </div>
+
+          </div>
+
+        </article>
+
+        <aside class="sidebar"><div class="sidebar-widget sidebar-widget-pick">
+<a class="pick-card" href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy" rel="noopener nofollow sponsored" target="_blank">
+<span class="pick-label">本月主推专线推荐</span>
+<span class="pick-head">
+<span class="pick-avatar"><img alt="" height="36" src="/assets/img/logos/yinxingren.png" style="object-fit: contain; border-radius: 6px;" width="36"/></span>
+<span class="pick-name">隐形人</span>
+<span class="pick-stars" title="本站评分">★★★★★</span>
+</span>
+<span class="pick-tagline">全 IEPL 专线 · 新加坡团队 · 4K/8K 秒开低延迟</span>
+<span class="pick-coupon">专属8折券码 <code>yxr888</code></span>
+<span class="pick-foot">
+<span class="pick-price">¥7.27/月付 起</span>
+<span class="pick-btn">访问官网 →</span>
+</span>
+</a>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">优质专线直达</div>
+<ul class="sidebar-list">
+<li><a href="/yinxingren.html">#1 隐形人：全 IEPL 纯专线</a></li>
+<li><a href="/muguangjiasu.html">#2 暮光加速：IPLC 高速专线</a></li>
+<li><a href="/breezenet.html">#3 微风网络：优质 IPLC 专线</a></li>
+<li><a href="/feimaoyun.html">#4 飞猫云：原生双ISP专线</a></li>
+<li><a href="/feiv.html">#5 飞V (FlyV)：BGP+IPLC 专线互联</a></li>
+<li><a href="/lingdongyun.html">#6 灵动云：BGP 智能多线冗余</a></li>
+<li><a href="/wavenet.html">#7 浪网 WaveNet：高速专线大带宽</a></li>
+<li><a href="/laddercloud.html">#8 梯子云：高速专线天梯随行</a></li>
+<li><a href="/quanqiuyun.html">#9 全球云：BGP+专线全球覆盖</a></li>
+<li><a href="/wuyoulianjie.html">#10 无忧链接：新VLESS+IPLC专线</a></li>
+</ul>
+</div><div class="sidebar-widget">
+<div class="sidebar-title">热门标签</div>
+<ul class="sidebar-list">
+<li><a href="/tag-vless">VLESS</a></li>
+<li><a href="/tag-hk">香港</a></li>
+<li><a href="/tag-netflix">Netflix</a></li>
+<li><a href="/tag-chatgpt">ChatGPT</a></li>
+<li><a href="/tag-iplc">IPLC专线</a></li>
+</ul>
+</div></aside>
+
+      </div>
+
+    </main><footer class="site-footer">
+      <div class="container-xl">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand-col">
+            <div class="footer-brand">VPN选择与机场推荐 vpnjc.blog</div>
+            <p>V哥出品：一站式解决科学上网全部问题。涵盖自动测速、机场推荐、VPN机场监测、优惠码、教程等，科学上网工具下载和教程的综合VPN机场平台。自由是唯一的方向。</p>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">VPN机场</div>
+            <a href="/">VPN机场推荐</a>
+            <a href="/rankings">VPN机场榜单</a>
+            <a href="/cheap-airports">便宜VPN机场</a>
+            <a href="/reviews">VPN机场评测</a>
+            <a href="/coupons">VPN机场优惠码</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">内容</div>
+            <a href="/tutorial">VPN机场教程</a>
+            <a href="/guide">VPN机场指南</a>
+            <a href="/knowledge">VPN机场知识</a>
+            <a href="/streaming">流媒体/AI</a>
+            <a href="/tags">标签导航</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">资源</div>
+            <a href="/download">客户端下载</a>
+			<a href="/free-vpn">免费VPN</a>
+			<a href="/free-node">机场节点</a>
+            <a href="/tools">在线工具</a>
+            <a href="/apple-id">共享ID</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-head">关于</div>
+            <a href="/about">关于我们</a>
+			<a href="/faq">常见问题</a>
+            <a href="/methodology">测评方法</a>
+            <a href="/disclaimer">免责声明</a>
+            <a href="/privacy">隐私政策</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 VPN选择与机场推荐 vpnjc.blog</span>
+          <span>VS 版本5.2（261101） 本站信息仅供参考，不构成任何软件推荐或担保。</span>
+        </div>
+      </div>
+    </footer>
+    <button class="to-top" id="backToTop" aria-label="返回顶部"><i class="ti ti-arrow-up"></i></button>
+    <script src="/assets/js/main.js"></script>
+<script defer src="//zztools.cc/stat/assets/js/tk.js" data-sid="8e6427d7bc551aea"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"11687e13bbaf45ecb062d6b8fcf1c940","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
