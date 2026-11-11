@@ -4,6 +4,6 @@
   "private": true,
   "description": "vpnjc.blog static site",
   "scripts": {
-    "build": "echo Static HTML site ready"
+    "build": "node build.mjs"
   }
 }
